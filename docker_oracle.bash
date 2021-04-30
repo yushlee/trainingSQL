@@ -18,3 +18,4 @@ ORA-12505, TNS:listener does not currently know of SID given in connect descript
 
 狀態 : 失敗 -測試失敗: IO 錯誤: Got minus one from a read call
  
+ https://matthung0807.blogspot.com/2020/10/mac-docker-oracle-12c-docker-container.html
