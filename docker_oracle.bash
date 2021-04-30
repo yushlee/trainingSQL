@@ -19,3 +19,9 @@ ORA-12505, TNS:listener does not currently know of SID given in connect descript
 狀態 : 失敗 -測試失敗: IO 錯誤: Got minus one from a read call
  
  https://matthung0807.blogspot.com/2020/10/mac-docker-oracle-12c-docker-container.html
+
+
+https://hub.docker.com/_/mariadb
+docker pull mariadb
+docker run -p 127.0.0.1:3306:3306 -e MYSQL_ROOT_PASSWORD=root -d mariadb:latest
+https://dev.mysql.com/downloads/workbench/
