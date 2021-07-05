@@ -1,7 +1,7 @@
-# Mac with Intel chip
+# Mac with Intel 核心
 https://desktop.docker.com/mac/stable/amd64/Docker.dmg
 
-# Mac with Apple chip
+# Mac with Apple (m1)核心
 https://desktop.docker.com/mac/stable/arm64/Docker.dmg
 
 docker pull mariadb
