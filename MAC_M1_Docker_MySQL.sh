@@ -1,3 +1,7 @@
+# Windows 系統僅需下載後安裝即可(僅此一步驟)
+# mysql-installer-community-8.0.25.0.msi
+https://dev.mysql.com/downloads/installer/
+
 # Mac with Intel核心 下載並且安裝
 https://desktop.docker.com/mac/stable/amd64/Docker.dmg
 
