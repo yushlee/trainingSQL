@@ -1,0 +1,30 @@
+● 兌換PromoCode
+https://l.facebook.com/l.php?u=https%3A%2F%2Fwww.microsoftazurepass.com%2FHome%2FHowTo%3Ffbclid%3DIwAR0pbRiTCSCpv-tkKq_oNByYXCuM1L-vDqdKdBfPthnaG7TLAEjE3gz7-Nw&h=AT3RTVmn34Fdn4VsgFLEOHBOhkLpeFzvKDmmJTtL9gZUJvVf_OWzDgBy2meVr7TplLQHsmgg6Cl49D9sv-_6foofXiT-wVcbZzXZ_F6hB87TBZFv54Po_M92eve5r7epovCLv41NshRC1SonhtnUFQ
+
+https://www.microsoftazurepass.com/
+
+● Azure 首頁
+https://portal.azure.com/#home
+
+● Azure 訂用帳戶
+https://account.azure.com/Subscriptions
+
+● 查詢Azure剩餘金額
+https://www.microsoftazuresponsorships.com/balance
+
+
+● 雲端學習文件
+https://docs.microsoft.com/en-us/learn/
+
+
+
+● 上課帳號 hotmails
+ID:TibameTraining-SQL@hotmail.com
+PWD:trainingSQL
+
+● 雲端 MS SQL Server(T8)
+t8-azure-training-sql-server.database.windows.net
+ID:local
+PWD:$1234abcd
+
+
