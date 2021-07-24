@@ -213,6 +213,7 @@ GROUP BY G.REGION_NAME
 ORDER BY COUNT_STORE DESC;
 
 
+
 -- 查詢所有部門資訊如下：
 -- 1.所在地(國家、洲省、城市)
 -- 2.部門(部門編號、部門名稱)
@@ -232,7 +233,7 @@ ORDER BY COUNT_STORE DESC;
 -- DEPARTMENTS(MANAGER_ID = EMPLOYEE_ID)EMPLOYEES
 -- EMPLOYEES(JOB_ID)JOBS
 
--- Setp3:寫SQL
+-- Setp3:寫SQL(所有部門資料共"27"筆)
 
 
 
