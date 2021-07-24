@@ -202,5 +202,37 @@ GROUP BY G.REGION_NAME
 ORDER BY SUM_SALES DESC;
 
 
+-- 查詢各區域的商店個數
+-- 資料結果依區域的商店個數由大至小排序
+-- (依據商店名稱,不包含重覆的商店)
+-- (不論該區域底下是否有所屬商店)
+SELECT G.REGION_NAME, COUNT(DISTINCT STORE_NAME) "COUNT_STORE"
+FROM GEOGRAPHY G LEFT JOIN STORE_INFORMATION S
+ON G.GEOGRAPHY_ID = S.GEOGRAPHY_ID
+GROUP BY G.REGION_NAME
+ORDER BY COUNT_STORE DESC;
+
+
+-- 查詢所有部門資訊如下：
+-- 1.所在地(國家、洲省、城市)
+-- 2.部門(部門編號、部門名稱)
+-- 3.部門管理者(員工編號、員工姓名、員工職稱)
+
+-- Step1:找出所有欄位的資料表
+-- 1.所在地(國家、洲省、城市)
+-- (LOCATIONS)LOCATION_ID,CITY,STATE_PROVINCE
+-- 2.部門(部門編號、部門名稱)
+-- (DEPARTMENTS)DEPARTMENT_ID,DEPARTMENT_NAME
+-- 3.部門管理者(員工編號、員工姓名、員工職稱)
+-- (EMPLOYEES)EMPLOYEE_ID,FIRST_NAME
+-- (JOBS)JOB_TITLE
+
+-- Step2:找資料表與資料表之間的關聯欄位
+-- LOCATIONS(LOCATION_ID)DEPARTMENTS
+-- DEPARTMENTS(MANAGER_ID = EMPLOYEE_ID)EMPLOYEES
+-- EMPLOYEES(JOB_ID)JOBS
+
+-- Setp3:寫SQL
+
 
 
