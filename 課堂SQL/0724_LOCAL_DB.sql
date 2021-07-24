@@ -1,0 +1,40 @@
+SELECT * FROM store_information
+ORDER BY STORE_NAME, SALES;
+
+SELECT SUM(SALES)
+FROM store_information;
+
+-- 計算各別商店的加總營業額
+-- GROUP BY (群組、合併)
+-- 依「商品名稱」群組，「營業額」合併加總
+-- 群組,"合併"指定函數
+SELECT STORE_NAME, SUM(SALES)
+FROM store_information
+GROUP BY STORE_NAME;
+
+SELECT STORE_NAME, SUM(SALES), COUNT(STORE_NAME), AVG(SALES),
+	MAX(SALES), MIN(SALES)
+FROM store_information
+GROUP BY STORE_NAME;
+
+
+-- DISTINCT只做資料去重覆
+SELECT DISTINCT STORE_NAME
+FROM store_information;
+
+-- MySQL
+-- 想查尋資料GROUP BY群組合併前的「資料清單」
+SELECT STORE_NAME, COUNT(STORE_NAME),
+	GROUP_CONCAT(SALES ORDER BY SALES SEPARATOR '/')
+FROM store_information
+GROUP BY STORE_NAME;
+
+-- Oracle
+SELECT STORE_NAME, COUNT(STORE_NAME),
+  LISTAGG(SALES, '/') WITHIN GROUP (ORDER BY SALES)
+FROM store_information
+GROUP BY STORE_NAME;
+
+
+
+
