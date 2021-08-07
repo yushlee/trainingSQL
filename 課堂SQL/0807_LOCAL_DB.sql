@@ -90,6 +90,25 @@ SELECT STORE_ID, STORE_NAME, SALES
 FROM STORE_INFORMATION
 WHERE STORE_NAME LIKE 'L_s';
 
+-- 想找STORE_NAME中有 'y' 或有 't' 的請問如何寫，因為預計要能找到 'Boston' 和 'Albany, Crossgates' 二個
+SELECT STORE_ID, STORE_NAME, SALES
+FROM store_information
+WHERE STORE_NAME LIKE '%y%'
+OR STORE_NAME LIKE '%t%';
+
+
+-- 1.「且」找出屬於西區的商店
+-- 2.「且」營業額大於300(包含300)
+-- 3.「且」商店名稱“L”開頭
+-- 4.「或」營業日介於2018年3月至4月
+
+-- 2:West(西區)
+SELECT *
+FROM store_information
+WHERE GEOGRAPHY_ID = 2;
+
+
+
 
 
 
