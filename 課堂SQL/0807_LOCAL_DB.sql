@@ -96,16 +96,18 @@ FROM store_information
 WHERE STORE_NAME LIKE '%y%'
 OR STORE_NAME LIKE '%t%';
 
-
--- 1.「且」找出屬於西區的商店
--- 2.「且」營業額大於300(包含300)
--- 3.「且」商店名稱“L”開頭
--- 4.「或」營業日介於2018年3月至4月
-
+-- 多行註解：Ctrl + / 
 -- 2:West(西區)
 SELECT *
-FROM store_information
-WHERE GEOGRAPHY_ID = 2;
+FROM STORE_INFORMATION
+-- 1.「且」找出屬於西區的商店
+WHERE GEOGRAPHY_ID = 2
+-- 2.「且」營業額大於300(包含300)
+AND SALES >= 300
+-- 3.「且」商店名稱 "L" 開頭
+AND STORE_NAME LIKE 'L%'
+-- 4.「或」營業日介於2018年3月至4月
+OR STORE_DATE BETWEEN '2018-03-01' AND '2018-04-30';
 
 
 
