@@ -165,10 +165,10 @@ WHERE GEOGRAPHY_ID IS NULL;
 SELECT COUNT(DISTINCT STORE_NAME)
 FROM STORE_INFORMATION;
 
-
-
-
-
+-- SQL:Structured Query Language 
+-- "結構化"查詢語言
+-- insert:資料新增、update:資料更新、delete:資料刪除
+SELECT * FROM STORE_INFORMATION;
 
 
 
