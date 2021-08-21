@@ -150,6 +150,7 @@ ORDER BY DEP_EMP.AVG_DEP DESC, E.SALARY DESC;
 --  5.外來鍵 (Foreign Key)
 --   參考完整性(referential integrity)
 --   父檔:顧客資料表，子檔:訂單資料表
+--  一般公司為了效能考量,並不會真的去設置FK欄位限制!
 
 -- Oracle
 CREATE TABLE TABLE1 (
@@ -171,7 +172,7 @@ CREATE TABLE GEOGRAPHY (
 	REGION_NAME  VARCHAR(255)
 );
 
-CREATE TABLE STORE_INFORMATION(
+CREATE TABLE STORE_INFORMATION (
 	STORE_ID   NUMERIC (10,0) PRIMARY KEY,
 	STORE_NAME VARCHAR(255),
 	SALES      NUMERIC (10,0) CHECK (SALES > 0),
