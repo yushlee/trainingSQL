@@ -22,6 +22,8 @@ WHERE GEOGRAPHY_ID IN (
 );
 
 -- 可把子查詢視為一個"暫存資料表"的概念
+-- 1.查詢與查詢之間，彼此互相獨立(各查各的)不互相影響
+-- 2.最後可再將所有的子查詢結果，再做join連接"整合"最終想要的查詢結果
 SELECT G.*, S.* 
 FROM (
 	SELECT * FROM STORE_INFORMATION
@@ -30,6 +32,21 @@ FROM (
 	SELECT * FROM GEOGRAPHY
 ) G
 WHERE S.GEOGRAPHY_ID = G.GEOGRAPHY_ID;
+
+
+SELECT G.*, S.* 
+FROM (
+	SELECT * FROM STORE_INFORMATION
+) S
+INNER JOIN
+(
+	SELECT * FROM GEOGRAPHY
+) G
+ON S.GEOGRAPHY_ID = G.GEOGRAPHY_ID;
+
+-- HR DB 資料查詢
+-- 查詢每個部門高於平均部門薪資的員工
+-- (結果依部門平均薪資降冪排序)
 
 
 
