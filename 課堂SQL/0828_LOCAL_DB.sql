@@ -226,5 +226,114 @@ FROM STORE_INFORMATION
 ORDER BY GEOGRAPHY_ID, SALES;
 
 
+SELECT STORE_ID, STORE_NAME,
+    ROW_NUMBER( ) OVER (ORDER BY SALES) ROWNO_STORE,
+    SALES,
+    -- 依「營業額」排序取"上一個"營業額
+    LAG(SALES) OVER (ORDER BY SALES) PREV_SALES,
+    -- 依「營業額」排序取"下一個"營業額
+    LEAD(SALES) OVER (ORDER BY SALES) NEXT_SALES
+FROM STORE_INFORMATION
+ORDER BY SALES;
+
+-- 數字捨入涵數
+SELECT
+-- 1.CEIL(x)：返回大於或等於x的最大整數值(無條件進位)
+CEIL(123.111),
+-- 2.FLOOR(x)：返回小於或等於x的最小整數值(無條件捨去)
+FLOOR(123.999),
+-- 3.ROUND(x , [y])：
+-- 返回(四捨五入)到小數點右邊y位的x值,y預設值為0
+-- 如果y是"負數"，則捨入到小數點左邊相應的整數位上
+ROUND(123.15, 1), 
+ROUND(123.14, 1),
+ROUND(123.5, -1),
+ROUND(125.5, -1);
+
+-- 字符函數
+-- 1.LOWER(string) :返回小寫形式的string,不是字母的不受影響.
+-- 2.UPPER(string)：返回大寫形式的string
+SELECT LOWER('APPLE'), UPPER('apple');
+SELECT LOWER(STORE_NAME) FROM STORE_INFORMATION;
+SELECT STORE_NAME FROM STORE_INFORMATION
+WHERE LOWER(STORE_NAME) = 'boston';
+
+-- 日期函數
+-- MySQL轉換函數：
+-- 1.DATE_FORMAT(date,format):日期轉字串
+SELECT DATE_FORMAT(SYSDATE(), '%Y/%m/%d %T'),
+-- 2.STR_TO_DATE(str,format):字串轉日期
+STR_TO_DATE('2021-08-15 00:00:00', "%Y-%m-%d %T"),
+DATE_ADD(STR_TO_DATE('2021-08-15 00:00:00', "%Y-%m-%d %T"), INTERVAL 5 DAY);
+
+
+-- MS SQL
+-- 1.日期轉字串
+SELECT convert(varchar, getdate(), 100) 'mon dd yyyy hh:mmAM (or PM)';
+SELECT convert(varchar, getdate(), 101) 'mm/dd/yyyy';
+SELECT convert(varchar, getdate(), 102) 'yyyy.mm.dd';
+SELECT convert(varchar, getdate(), 103) 'dd/mm/yyyy';
+SELECT convert(varchar, getdate(), 104) 'dd.mm.yyyy';
+SELECT convert(varchar, getdate(), 105) 'dd-mm-yyyy';
+SELECT convert(varchar, getdate(), 106) 'dd mon yyyy';
+SELECT convert(varchar, getdate(), 107) 'mon dd, yyyy';
+SELECT convert(varchar, getdate(), 108) 'hh:mm:ss';
+SELECT convert(varchar, getdate(), 109) 'mon dd yyyy hh:mm:ss:mmmAM (or PM)';
+SELECT convert(varchar, getdate(), 110) 'mm-dd-yyyy';
+SELECT convert(varchar, getdate(), 111) 'yyyy/mm/dd';
+SELECT convert(varchar, getdate(), 112) 'yyyymmdd';
+SELECT convert(varchar, getdate(), 113) 'dd mon yyyy hh:mm:ss:mmm';
+SELECT convert(varchar, getdate(), 114) 'hh:mm:ss:mmm(24h)';
+SELECT convert(varchar, getdate(), 120) 'yyyy-mm-dd hh:mm:ss(24h)';
+SELECT convert(varchar, getdate(), 121) 'yyyy-mm-dd hh:mm:ss.mmm';
+SELECT convert(varchar, getdate(), 126) 'yyyy-mm-ddThh:mm:ss.mmm';
+
+-- 2.字串轉日期
+SELECT convert(datetime, '2021-08-16 21:52:22', 120)　'yyyy-mm-dd hh:mm:ss(24h)';
+
+-- 取得部份日期資料
+-- MySQL
+SELECT SYSDATE(), YEAR(SYSDATE()), MONTH(SYSDATE()), DAY(SYSDATE()),
+HOUR(SYSDATE()), MINUTE(SYSDATE()), SECOND(SYSDATE());
+
+SELECT * FROM STORE_INFORMATION
+WHERE YEAR(STORE_DATE) = 2018 AND MONTH(STORE_DATE) = 03
+ORDER BY STORE_DATE;
+
+-- MS SQL
+SELECT GETDATE(), YEAR(GETDATE()), MONTH(GETDATE()), DAY(GETDATE());
+SELECT GETDATE() 'Today',
+DATEPART(year,GETDATE()) 'Year Part',
+DATEPART(month,GETDATE()) 'Month Part',
+DATEPART(day,GETDATE()) 'Day Part',
+DATEPART(hour,GETDATE()) 'Hour Part',
+DATEPART(minute,GETDATE()) 'Minute Part',
+DATEPART(second,GETDATE()) 'Second Part',
+DATEPART(millisecond,GETDATE()) 'MilliSecond Part';
+
+
+-- 日期算術(MySQL):
+--  MySQL日期算術:
+SELECT SYSDATE(), 
+DATE_ADD('2021-08-15', INTERVAL 1 DAY),
+DATE_ADD('2021-08-15', INTERVAL 1 HOUR),
+DATE_ADD('2021-08-15', INTERVAL 1 MINUTE);
+
+SELECT DATE_SUB('2021-08-15', INTERVAL 5 DAY);
+
+
+-- MS SQL
+SELECT GETDATE(),
+DATEADD(YEAR, 1, GETDATE()) "DATEADD_YEAR",
+DATEADD(MONTH, 1, GETDATE()) "DATEADD_MONTH",
+DATEADD(DAY, 1, GETDATE()) "DATEADD_DAY",
+DATEADD(HOUR, 1, GETDATE()) "DATEADD_HOUR",
+DATEADD(MINUTE, 1, GETDATE()) "DATEADD_MINUTE",
+DATEADD(SECOND, 1, GETDATE()) "DATEADD_SECOND";
+
+SELECT GETDATE(),
+DATEADD(YEAR, -1, GETDATE()) "DATESUB_YEAR";
+
+
 
 
