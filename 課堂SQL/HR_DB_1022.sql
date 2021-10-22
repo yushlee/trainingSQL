@@ -19,7 +19,8 @@
 SELECT *
 FROM locations L 
 JOIN departments D ON L.LOCATION_ID = D.LOCATION_ID
-JOIN employees E ON D.MANAGER_ID = E.EMPLOYEE_ID;
+JOIN employees E ON D.MANAGER_ID = E.EMPLOYEE_ID
+JOIN ...;
 
 
 
