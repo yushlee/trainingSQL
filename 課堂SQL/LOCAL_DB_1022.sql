@@ -96,6 +96,27 @@ ORDER BY STORE_ID;
 -- 排除「商店資料個數」1(含)個以下的商店資料
 -- 依照「平均營業額」由大至小排序
 -- PS:使用別名語法簡化「表格名稱」及查詢結果「欄位名稱」
+SELECT STORE_NAME, SUM(SALES) "SUM_SALES",  COUNT(STORE_ID) AS "COUNT_STORE", FLOOR(AVG(SALES)) AS "AVG_SALES"
+FROM STORE_INFORMATION
+GROUP BY STORE_NAME
+HAVING AVG_SALES > 1000 AND COUNT_STORE > 1
+ORDER BY AVG_SALES DESC;
+
+
+-- 查詢各區域的營業額總計
+-- 資料結果依營業額總計由大到小排序
+-- (不論該區域底下是否有所屬商店)
+
+
+-- 查詢各區域的商店個數
+-- 資料結果依區域的商店個數由大至小排序
+-- (依據商店名稱,不包含重覆的商店)
+-- (不論該區域底下是否有所屬商店)
+
+
+
+
+
 
 
 
