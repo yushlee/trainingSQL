@@ -10,5 +10,18 @@
 -- employees(EMPLOYEE_ID, FIRST_NAME)
 -- jobs(JOB_TITLE)
 
--- Step2:
--- Step3:
+-- Step2:找出"資料表"與"資料表"之間關聯欄位
+-- locations(LOCATION_ID)departments
+-- departments(MANAGER_ID, EMPLOYEE_ID)employees
+-- employees(JOB_ID)jobs
+
+-- Step3:寫SQL
+SELECT *
+FROM locations L 
+JOIN departments D ON L.LOCATION_ID = D.LOCATION_ID
+JOIN employees E ON D.MANAGER_ID = E.EMPLOYEE_ID;
+
+
+
+
+
