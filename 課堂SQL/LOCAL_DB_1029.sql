@@ -1,0 +1,18 @@
+--   SQL UNION 聯集(不包含重覆值)
+-- NULL、1、2
+-- 1、2、3
+SELECT GEOGRAPHY_ID FROM STORE_INFORMATION
+UNION
+SELECT GEOGRAPHY_ID FROM GEOGRAPHY;
+
+
+
+
+
+
+--   SQL UNION ALL 聯集(包含重覆值)
+--   SQL INTERSECT 交集
+--   SQL MINUS 排除(不包含重覆值) 
+--   SQL SubQuery 子查詢
+--   SQL EXISTS 存在式關聯查詢
+--   SQL CASE WHEN 條件查詢
