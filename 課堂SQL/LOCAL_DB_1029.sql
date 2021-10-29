@@ -149,5 +149,8 @@ SELECT STORE_ID, STORE_NAME,
 FROM STORE_INFORMATION
 ORDER BY SALES;
 
+-- https://leetcode.com/
+-- https://zqt0.gitbook.io/leetcode/sql/511.game-play-analysis-i
+-- https://zhuanlan.zhihu.com/p/265247944
 
 
