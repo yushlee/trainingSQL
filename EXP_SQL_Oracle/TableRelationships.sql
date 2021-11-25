@@ -53,7 +53,7 @@ INSERT INTO "INVENTORY" (ITEM, DESCRIPTION, CURRENTQUANTITY, VENDORNUMBER) VALUE
 
 
 -- ★ Many to Many
-DROP TABLE ClassStudent_Relation;
+DROP TABLE Class_Student_Relation;
 DROP TABLE Class;
 DROP TABLE Student;
 -- 課程科目
@@ -74,7 +74,7 @@ CREATE TABLE Student(
 --
 -- UNIQUE (StudentID, ClassID)
 -- 表示一位學生只能選擇同樣的課程一次不得重覆
-CREATE TABLE ClassStudent_Relation(
+CREATE TABLE Class_Student_Relation(
     StudentID varchar2(20) NOT NULL,
     ClassID varchar2(20) NOT NULL,
     FOREIGN KEY (StudentID) REFERENCES Student(StudentID),
