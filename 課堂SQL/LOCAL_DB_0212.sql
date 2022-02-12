@@ -84,14 +84,60 @@ SELECT STORE_NAME
 FROM STORE_INFORMATION
 WHERE STORE_NAME LIKE 'B____n';
 
-/*
-1.「且」找出屬於西區的商店
-2.「且」營業額大於300(包含300)
-3.「且」商店名稱“L”開頭
-4.「或」營業日介於2018年3月至4月
-*/
+
 SELECT * FROM STORE_INFORMATION
-WHERE GEOGRAPHY_ID = 2;
+-- 1.「且」找出屬於西區的商店
+WHERE GEOGRAPHY_ID = 2
+-- 2.「且」營業額大於300(包含300)
+AND SALES >= 300
+-- 3.「且」商店名稱"L"開頭
+AND STORE_NAME LIKE 'L%'
+-- 4.「或」營業日介於2018年3月至4月
+OR STORE_DATE BETWEEN '2018-03-01' AND '2018-04-30';
+
+
+
+SELECT * FROM STORE_INFORMATION
+-- 1.「且」找出屬於西區的商店
+WHERE GEOGRAPHY_ID = 2
+-- 2.「且」營業額大於300(包含300)
+AND SALES >= 300
+-- 4.「或」營業日介於2018年3月至4月
+OR STORE_DATE BETWEEN '2018-03-01' AND '2018-04-30'
+-- 3.「且」商店名稱"L"開頭
+AND STORE_NAME LIKE 'L%';
+
+
+-- 第1步.先依照想要找出來的資料分別獨立下sql查詢(只會有and)並且確認資料是正確的，
+-- 查詢結果:2,4,5
+SELECT * FROM STORE_INFORMATION
+-- 1.「且」找出屬於西區的商店
+WHERE GEOGRAPHY_ID = 2
+-- 2.「且」營業額大於300(包含300)
+AND SALES >= 300;
+
+-- 查詢結果:2
+SELECT * FROM STORE_INFORMATION
+-- 4.「或」營業日介於2018年3月至4月
+WHERE STORE_DATE BETWEEN '2018-03-01' AND '2018-04-30'
+-- 3.「且」商店名稱"L"開頭
+AND STORE_NAME LIKE 'L%';
+
+-- 第2步.把所有sql條件組之間使用OR串接
+SELECT * FROM STORE_INFORMATION
+-- 1.「且」找出屬於西區的商店
+WHERE (
+	GEOGRAPHY_ID = 2
+	-- 2.「且」營業額大於300(包含300)
+	AND SALES >= 300
+)
+OR (
+	-- 4.「或」營業日介於2018年3月至4月
+	STORE_DATE BETWEEN '2018-03-01' AND '2018-04-30'
+	-- 3.「且」商店名稱"L"開頭
+	AND STORE_NAME LIKE 'L%'
+);
+
 
 
 
