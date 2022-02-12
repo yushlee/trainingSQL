@@ -138,8 +138,29 @@ OR (
 	AND STORE_NAME LIKE 'L%'
 );
 
+-- 升幕 ASC (預設)
+-- 降幕 DESC
+SELECT * 
+FROM store_information
+ORDER BY SALES ASC;
+
+SELECT * 
+FROM store_information
+ORDER BY SALES DESC;
+
+-- 主排序欄位(SALES)、次排序欄位(STORE_DATE)
+SELECT * 
+FROM store_information
+ORDER BY SALES DESC, STORE_DATE DESC;
+
+-- 3表示SELECT的第三個欄位
+SELECT STORE_ID, STORE_NAME, SALES 
+FROM store_information
+ORDER BY 3 DESC;
 
 
+SELECT SUM(SALES)
+FROM store_information;
 
 
 
