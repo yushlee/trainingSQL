@@ -84,7 +84,14 @@ SELECT STORE_NAME
 FROM STORE_INFORMATION
 WHERE STORE_NAME LIKE 'B____n';
 
-
+/*
+1.「且」找出屬於西區的商店
+2.「且」營業額大於300(包含300)
+3.「且」商店名稱“L”開頭
+4.「或」營業日介於2018年3月至4月
+*/
+SELECT * FROM STORE_INFORMATION
+WHERE GEOGRAPHY_ID = 2;
 
 
 
