@@ -159,14 +159,41 @@ FROM store_information
 ORDER BY 3 DESC;
 
 
-SELECT SUM(SALES)
+SELECT SUM(SALES), COUNT(STORE_ID), AVG(SALES),
+	MAX(SALES), MIN(SALES)
 FROM store_information;
 
 
+SELECT STORE_ID, STORE_NAME,
+ STORE_ID + SALES, SALES, SALES + 200
+FROM store_information;
+
+-- 計算NULL空值資料個數
+SELECT COUNT(STORE_ID) 
+FROM store_information
+WHERE GEOGRAPHY_ID IS NULL;
+
+SELECT *
+FROM store_information;
+
+-- 計算非NULL空值資料個數
+SELECT COUNT(STORE_ID) 
+FROM store_information
+WHERE GEOGRAPHY_ID IS NOT NULL;
+
+-- 計算非重覆的商店名稱個數
+SELECT COUNT(DISTINCT STORE_NAME)
+FROM store_information;
+
+SELECT * 
+FROM store_information
+ORDER BY STORE_NAME;
 
 
-
-
-
-
-
+-- 各別商店的加總營業額
+-- GROUP(群組、合併)
+-- 非群組必須給與合併的方式(函數)
+SELECT STORE_NAME, SUM(SALES), COUNT(STORE_ID), AVG(SALES),
+	MAX(SALES), MIN(SALES)
+FROM store_information
+GROUP BY STORE_NAME;
