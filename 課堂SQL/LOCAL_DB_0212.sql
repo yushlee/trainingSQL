@@ -40,11 +40,23 @@ SELECT *
 FROM STORE_INFORMATION
 WHERE STORE_ID IN (3, 4, 5);
 
+SELECT * 
+FROM STORE_INFORMATION
+WHERE STORE_ID >= 3 AND STORE_ID <= 5;
+
 
 -- 文字類型欄位"區分小大寫"(依照不同資料庫有所不同限制)
 -- 文字類型欄位須上單引號
 SELECT * FROM STORE_INFORMATION
 WHERE STORE_NAME IN ('Los Angeles', 'San Diego');
+
+
+-- 運用一個範圍(range) 內抓出資料庫中的值
+SELECT * 
+FROM STORE_INFORMATION
+WHERE STORE_ID BETWEEN 3 AND 5;
+
+
 
 
 
