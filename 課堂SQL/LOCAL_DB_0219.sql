@@ -108,17 +108,62 @@ GROUP BY G.REGION_NAME
 ORDER BY COUNT(DISTINCT  S.STORE_NAME) DESC;
 
 
+SELECT concat(STORE_ID, '-', STORE_NAME, ' $', SALES) "STORE_INFO"
+FROM store_information;
+
+-- 子字串
+-- SUBSTR(str,pos,len): 由<str>中的第<pos>位置開始，選出接下去的<len>個字元。
+SELECT STORE_NAME, SUBSTR(STORE_NAME, 3), SUBSTR(STORE_NAME, 3, 2)
+FROM store_information;
 
 
+SELECT STORE_NAME, trim(STORE_NAME), LTRIM(STORE_NAME), RTRIM(STORE_NAME)
+FROM store_information;
 
 
+-- TRIM([[位置] [要移除的字串] FROM ] 字串)
+-- [位置] 的可能值為 LEADING (起頭), TRAILING (結尾), or BOTH (起頭及結尾)
+SELECT STORE_ID, STORE_NAME,
+    TRIM(LEADING 'Bos' FROM STORE_NAME),
+    TRIM(TRAILING 's' FROM STORE_NAME),
+    TRIM(BOTH 'L' FROM STORE_NAME)
+FROM STORE_INFORMATION;
+
+-- 主鍵可以包含一或多個欄位。當主鍵包含多個欄位時，稱為組合鍵 (Composite Key)
+CREATE TABLE TABLE_A
+(
+  PK_1 NUMERIC NOT NULL,
+  PK_2 NUMERIC NOT NULL,
+  CONSTRAINT TABLE_A_PK PRIMARY KEY (PK_1, PK_2)
+);
 
 
+SELECT * FROM store_information;
 
 
+INSERT INTO store_information (STORE_ID, STORE_NAME, SALES, STORE_DATE, GEOGRAPHY_ID)
+VALUE(10, 'Apple Inc', 777, '2022-02-19', 3);
 
+-- DML:資料新增
+-- 若VALUE已經是全欄位的資料則欄位名稱可省略不寫
+INSERT INTO store_information VALUE(10, 'Apple Inc', 777, '2022-02-19', 3);
+INSERT INTO store_information VALUE(10, 'Apple Inc', 777, '2022-02-19', 3);
+INSERT INTO store_information VALUE(10, 'Apple Inc', 777, STR_TO_DATE('2022-02-19', "%Y-%m-%d"), 3);
 
+-- MySQL轉換函數：
+-- 1.DATE_FORMAT(date,format):日期轉字串
+SELECT DATE_FORMAT(SYSDATE(), '%m-%d-%Y %T'),
+-- 2.STR_TO_DATE(str,format):字串轉日期
+STR_TO_DATE('08-15-2021 00:00:00', "%m-%d-%Y %T");
 
+SELECT * FROM store_information
+WHERE STORE_DATE = STR_TO_DATE('2018-03-09', "%Y-%m-%d");
 
+-- DML:資料更新
+UPDATE store_information
+SET SALES = 888, STORE_NAME = 'APPLE INC'
+WHERE STORE_ID = 10;
 
+-- DML:資料刪除
+DELETE FROM store_information WHERE STORE_ID = 10;
 
