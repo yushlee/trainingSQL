@@ -89,8 +89,20 @@ ORDER BY AVG(SALES) DESC;
 資料結果依營業額總計由大到小排序
 (不論該區域底下是否有所屬商店)
 */
-SELECT G.GEOGRAPHY_ID, G.REGION_NAME, S.STORE_ID, S.STORE_NAME, S.SALES
+SELECT G.REGION_NAME, IFNULL(SUM(S.SALES), 0) "SUM_SALES"
 FROM geography G LEFT JOIN store_information S
+ON G.GEOGRAPHY_ID = S.GEOGRAPHY_ID
+GROUP BY G.REGION_NAME
+ORDER BY SUM(S.SALES) DESC;
+
+/*
+查詢各區域的商店個數
+資料結果依區域的商店個數由大至小排序
+(依據商店名稱,不包含重覆的商店)
+(不論該區域底下是否有所屬商店)
+*/
+SELECT G.GEOGRAPHY_ID, G.REGION_NAME, S.STORE_ID, S.STORE_NAME
+FROM geography G LEFT OUTER JOIN store_information S
 ON G.GEOGRAPHY_ID = S.GEOGRAPHY_ID;
 
 
