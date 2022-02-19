@@ -167,3 +167,55 @@ WHERE STORE_ID = 10;
 -- DML:資料刪除
 DELETE FROM store_information WHERE STORE_ID = 10;
 
+
+/*
+COMMIT 完成交易作業
+如進行資料異動操作後最後須執行交易提交commit的動作資料方可異動成功
+交易隔離性：資料庫交易與交易之間彼此獨立，一個交易是看不到另一個交易所異動中的資料
+*/
+COMMIT;
+
+/*
+ROLLBACK 資料回滾(倒回)
+可對交易異動中的資料在資料未提交commit前，進行rollback取消這次交易所有的資料異動指令
+*/
+ROLLBACK;
+
+/*
+查詢所有部門資訊如下：
+1.所在地(國家、洲省、城市)
+2.部門(部門編號、部門名稱)
+3.部門管理者(員工編號、員工姓名、員工職稱)
+*/
+
+/*
+ Step1:找出"資料欄"所屬"資料表"
+ LOCATIONS(COUNTRY_ID, STATE_PROVINCE, CITY)
+ departments(DEPARTMENT_ID, DEPARTMENT_NAME)
+ employees(EMPLOYEE_ID, FIRST_NAME)
+ jobs(JOB_TITLE)
+ 
+ Step2:找出"資料表"與"資料表"之間的關聯欄位
+ LOCATIONS(LOCATION_ID)DEPARTMENTS
+ departments(MANAGER_ID,EMPLOYEE_ID)employees
+ employees(JOB_ID)jobs
+ 
+ Setp3:寫SQL
+ 
+*/
+SELECT L.*, D.*
+FROM DEPARTMENTS D 
+JOIN LOCATIONS L ON D.LOCATION_ID = L.LOCATION_ID
+JOIN EMPLOYEES E ON D.MANAGER_ID = E.EMPLOYEE_ID;
+
+
+
+
+
+
+
+
+
+
+
+
