@@ -28,6 +28,71 @@ INTERSECT
 SELECT GEOGRAPHY_ID FROM STORE_INFORMATION;
 
 
+-- SQL1: A、B、C、D
+-- MINUS
+-- SQL2: C、D、E、F
+-- 查詢結果:A、B
+
+-- 請注意，在 MINUS 指令下，不同的值只會被列出一次。 
+-- 1,2,3
+SELECT GEOGRAPHY_ID FROM GEOGRAPHY
+MINUS
+-- 1,2,null
+SELECT GEOGRAPHY_ID FROM STORE_INFORMATION;
+-- 查詢結果:3
+
+-- 1,2,null
+SELECT GEOGRAPHY_ID FROM STORE_INFORMATION
+MINUS
+-- 1,2,3
+SELECT GEOGRAPHY_ID FROM GEOGRAPHY;
+-- 查詢結果:null
+
+-- 營業額最高的商店資料
+-- 1.最高的營業額
+-- 2.商店資料
+-- Sub Query(子查詢) 查詢之中有查詢
+
+-- 外查詢
+SELECT * 
+FROM store_information
+WHERE SALES = (
+	-- 內查詢
+	SELECT MAX(SALES) FROM store_information
+);
+
+-- 簡單子查詢(內部查詢本身與外部查詢沒有關係)
+-- 外查詢
+SELECT SUM(SALES) FROM store_information
+WHERE GEOGRAPHY_ID IN (
+	-- 內查詢
+	SELECT GEOGRAPHY_ID FROM geography WHERE REGION_NAME = 'West'
+);
+
+
+-- 相關子查詢(內部查詢是要利用到外部查詢提到的表格中的欄位)
+-- 東西區所有商店營業額加總($10250)
+--  外查詢
+SELECT SUM(SALES) FROM store_information S
+WHERE S.GEOGRAPHY_ID IN (
+	-- 內查詢
+	SELECT GEOGRAPHY_ID FROM geography G WHERE G.GEOGRAPHY_ID = S.GEOGRAPHY_ID
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
