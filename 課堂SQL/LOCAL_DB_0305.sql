@@ -80,6 +80,8 @@ WHERE S.GEOGRAPHY_ID IN (
 );
 
 -- Temp暫存表
+-- 簡單子查詢
+-- 查詢與查詢之間彼此獨立不能互相使用對方的欄位
 SELECT G.*, S.*
 FROM (
 	SELECT GEOGRAPHY_ID, REGION_NAME FROM geography
@@ -107,11 +109,28 @@ AND E.DEPARTMENT_ID = D.DEPARTMENT_ID
 AND E.SALARY > DEP.DEP_AVG
 ORDER BY DEP.DEP_AVG DESC, E.SALARY DESC;
 
+-- 關聯式子查詢
+-- WITH (Common Table Expressions)
+-- 查詢與查詢之間可以相互使用欄位做關聯式查詢
+WITH G AS (
+	SELECT GEOGRAPHY_ID, REGION_NAME FROM geography
+),
+S AS (
+	SELECT store_id, store_name, sales, geography_id FROM store_information
+)
+SELECT G.*, S.* 
+FROM G,S
+WHERE G.GEOGRAPHY_ID = S.GEOGRAPHY_ID;
 
-
-
-
-
+WITH G AS (
+	SELECT GEOGRAPHY_ID, REGION_NAME FROM geography
+),
+S AS (
+	SELECT store_id, store_name, sales, geography_id FROM store_information
+)
+SELECT G.*, S.* 
+FROM G LEFT JOIN S
+ON G.GEOGRAPHY_ID = S.GEOGRAPHY_ID;
 
 
 
