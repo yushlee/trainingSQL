@@ -177,6 +177,67 @@ FROM (
 GROUP BY RANGE_SALES
 ORDER BY RANGE_SALES;
 
+-- 做一個表格自我連結 (self join)，將結果依序列出，然後算出每一行之前(包含那一行本身)有多少行數。
+SELECT S1.store_id, S1.store_name, S1.sales,
+	S2.store_id, S2.store_name, S2.sales
+FROM store_information S1, store_information S2
+WHERE S2.sales >= S1.SALES
+ORDER BY S1.SALES;
+
+SELECT S1.store_id, S1.store_name, S1.SALES, COUNT(S2.store_id) SALES_RANK
+FROM store_information S1, store_information S2
+WHERE S2.sales >= S1.SALES
+GROUP BY S1.store_id, S1.store_name, S1.SALES
+ORDER BY SALES_RANK;
+
+-- 全部商店排序
+-- Analytic Functions with OVER Clause (分析函數)
+SELECT store_id, store_name, SALES, geography_id,
+	RANK() OVER(ORDER BY SALES DESC) STORE_RANK,
+    DENSE_RANK() OVER(ORDER BY SALES DESC) DENSE_STORE_RANK,
+    PERCENT_RANK() OVER (ORDER BY SALES DESC) PERCENT_STORE_RANK,
+    ROW_NUMBER() OVER(ORDER BY SALES DESC) ROW_NUMBER_STORE_RANK
+FROM store_information;
+
+
+-- 商店依照各別"區域排名"
+SELECT store_id, store_name, SALES, geography_id,
+	RANK() OVER(PARTITION BY geography_id ORDER BY SALES DESC) STORE_RANK
+FROM store_information;
+
+
+SELECT * FROM store_information
+ORDER BY geography_id, sales DESC;
+
+-- Aggregate Functions with OVER Clause (聚合函數)
+SELECT STORE_ID, STORE_NAME, SALES, GEOGRAPHY_ID,
+    -- 依「區域劃分」取營業額"最小值"
+    MIN(SALES) OVER (PARTITION BY GEOGRAPHY_ID) MIN_SALES,
+    -- 依「區域劃分」取營業額"最大值"
+    MAX(SALES) OVER (PARTITION BY GEOGRAPHY_ID) MAX_SALES,
+    -- 依「區域劃分」取商店"數量"
+    COUNT(STORE_ID) OVER (PARTITION BY GEOGRAPHY_ID) COUNT_STORE_ID,
+    -- 依「區域劃分」取營業額"總和"
+    SUM(SALES) OVER (PARTITION BY GEOGRAPHY_ID) SUM_SALES,
+    -- 依「區域劃分」取營業額"平均"
+    AVG(SALES) OVER (PARTITION BY GEOGRAPHY_ID) AVG_SALES
+FROM STORE_INFORMATION
+ORDER BY GEOGRAPHY_ID, SALES;
+
+
+-- Analytic Functions with OVER Clause (分析函數)
+SELECT STORE_ID, STORE_NAME,
+    ROW_NUMBER( ) OVER (ORDER BY SALES) ROWNO_STORE,
+    SALES,
+    -- 依「營業額」排序取"上一個"營業額
+    LAG(SALES) OVER (ORDER BY SALES) PREV_SALES,
+    -- 依「營業額」排序取"下一個"營業額
+    LEAD(SALES) OVER (ORDER BY SALES) NEXT_SALES
+FROM STORE_INFORMATION
+ORDER BY SALES;
+
+
+
 
 
 
