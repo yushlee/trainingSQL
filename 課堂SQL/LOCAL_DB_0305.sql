@@ -133,6 +133,55 @@ FROM G LEFT JOIN S
 ON G.GEOGRAPHY_ID = S.GEOGRAPHY_ID;
 
 
+-- 東西區加總:$13,250
+-- 外查詢
+SELECT SUM(SALES) FROM store_information
+WHERE EXISTS (
+   -- 測試「內查詢」有沒有產生任何結果
+	SELECT * FROM geography WHERE REGION_NAME = 'West'
+);
+
+-- EXISTS 關聯式子查詢
+-- 外查詢
+SELECT SUM(SALES) FROM store_information S
+WHERE EXISTS (
+   -- 測試「內查詢」有沒有產生任何結果
+	SELECT * FROM geography G 
+    WHERE REGION_NAME = 'West' AND G.GEOGRAPHY_ID = S.GEOGRAPHY_ID
+);
+
+-- SQL CASE WHEN 條件查詢
+SELECT S.store_id, S.store_name, S.sales,
+	CASE S.store_name
+		WHEN 'Los Angeles' THEN S.sales * 2
+		WHEN 'San Diego' THEN S.sales * 1.5
+	ELSE S.sales END NEW_SALES
+FROM store_information S;
+
+-- 查詢各個營業區間的資料個數
+-- 0 ~ 1000 3個
+-- 1001 ~ 2000 3個
+-- 2001 ~ 3000 3個
+-- > 3000 0個
+SELECT RANGE_SALES, COUNT(store_id)
+FROM (
+	SELECT S.store_id, S.store_name, S.sales,
+		CASE
+			WHEN (S.sales BETWEEN 0 AND 1000)  THEN '0-1000'
+			WHEN (S.sales BETWEEN 1001 AND 2000)  THEN '1001-2000'
+			WHEN (S.sales BETWEEN 2001 AND 3000)  THEN '2001-3000'
+			WHEN (S.sales > 3000) THEN '> 3000'
+		END RANGE_SALES
+	FROM store_information S
+) STORE_RANGE
+GROUP BY RANGE_SALES
+ORDER BY RANGE_SALES;
+
+
+
+
+
+
 
 
 
