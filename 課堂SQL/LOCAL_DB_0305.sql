@@ -237,32 +237,38 @@ FROM STORE_INFORMATION
 ORDER BY SALES;
 
 
+-- 自我連結 (self join)，然後將結果依序列出。
+-- 在做列出排名時，我們算出每一行之前 (包含那一行本身) 有多少行數；
+-- 而在做累積總計時，我們則是算出每一行之前 (包含那一行本身) 的總合。 
+SELECT S1.store_id, S1.store_name, S1.SALES, SUM(S2.SALES) Running_Total
+FROM store_information S1, store_information S2
+WHERE S2.sales >= S1.SALES
+GROUP BY S1.store_id, S1.store_name, S1.SALES
+ORDER BY S1.SALES DESC;
+
+
+-- MySQL
+-- MySQL：YEAR(date)取年、MONTH(date)取月份、DAY(date)取日
+-- HOUR(date)取小時、MINUTE(date)取分鐘、SECOND(date)取秒 
+SELECT SYSDATE(), YEAR(SYSDATE()), MONTH(SYSDATE()), DAY(SYSDATE()),
+HOUR(SYSDATE()), MINUTE(SYSDATE()), SECOND(SYSDATE());
 
 
 
+--  MySQL日期算術:
+-- MINUTE、HOUR、DAY、WEEK、MONTH、YEAR
+SELECT SYSDATE(), 
+DATE_SUB(SYSDATE(), INTERVAL 2 DAY),
+DATE_ADD('2021-08-15', INTERVAL 1 DAY),
+DATE_ADD('2021-08-15', INTERVAL 1 MINUTE);
+
+SELECT store_id, store_name, store_date, 
+	DATE_ADD(store_date, INTERVAL 1 DAY)
+FROM store_information;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+-- MySQL轉換函數：
+-- 1.DATE_FORMAT(date,format):日期轉字串
+SELECT DATE_FORMAT(SYSDATE(), '%Y-%m-%d %T'),
+-- 2.STR_TO_DATE(str,format):字串轉日期
+STR_TO_DATE('2021-08-15 00:00:00', "%Y-%m-%d %T");
