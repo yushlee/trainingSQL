@@ -79,6 +79,28 @@ WHERE S.GEOGRAPHY_ID IN (
 	SELECT GEOGRAPHY_ID FROM geography G WHERE G.GEOGRAPHY_ID = S.GEOGRAPHY_ID
 );
 
+-- Temp暫存表
+SELECT G.*, S.*
+FROM (
+	SELECT GEOGRAPHY_ID, REGION_NAME FROM geography
+) G,
+(
+	SELECT store_id, store_name, sales, geography_id FROM store_information
+) S
+WHERE G.GEOGRAPHY_ID = S.GEOGRAPHY_ID;
+
+
+-- 查詢每個部門高於平均部門薪資的員工
+-- 1.平均部門薪資
+-- 2.高於"平均部門薪資"的員工資料
+-- (結果依部門平均薪資降冪排序)
+SELECT * FROM EMPLOYEES ORDER BY DEPARTMENT_ID;
+
+
+
+
+
+
 
 
 
