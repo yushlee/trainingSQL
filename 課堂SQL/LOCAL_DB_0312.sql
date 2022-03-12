@@ -112,4 +112,31 @@ SELECT COUNT(DISTINCT STORE_NAME)
 FROM store_information;
 
 
+SELECT store_name, SUM(SALES), COUNT(STORE_ID), AVG(SALES),
+	MIN(SALES), MAX(SALES)
+FROM store_information
+GROUP BY store_name;
+
+-- MySQL
+-- GROUP_CONCAT "資料群組清單化"未合併前的資料
+SELECT store_name, SUM(SALES), COUNT(STORE_ID),
+	GROUP_CONCAT(SALES ORDER BY SALES DESC SEPARATOR '/')
+FROM store_information
+GROUP BY store_name;
+
+-- Oracle "資料群組清單化"
+SELECT store_name, SUM(SALES), COUNT(STORE_ID),
+	LISTAGG(SALES, '/') within group (order by SALES desc)
+FROM store_information
+GROUP BY store_name;
+
+
+--  MS SQL Server
+SELECT STORE_NAME, 
+    STRING_AGG(SALES, '/')
+FROM STORE_INFORMATION
+GROUP BY STORE_NAME;
+
+
+
 
