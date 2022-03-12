@@ -99,3 +99,17 @@ ORDER BY 3 DESC;
 SELECT SUM(SALES), AVG(SALES), COUNT(STORE_ID), MIN(SALES), MAX(SALES)
 FROM store_information;
 
+-- IS NULL:找出空值的資料
+SELECT COUNT(STORE_ID) FROM store_information
+WHERE geography_id IS NULL;
+
+-- IS NOT NULL:找出非空值的資料
+SELECT COUNT(STORE_ID) FROM store_information
+WHERE geography_id IS NOT NULL;
+
+-- 計算去重覆的商店名稱的資料個數
+SELECT COUNT(DISTINCT STORE_NAME)
+FROM store_information;
+
+
+
