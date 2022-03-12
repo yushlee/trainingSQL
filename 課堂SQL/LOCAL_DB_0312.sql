@@ -120,7 +120,7 @@ GROUP BY store_name;
 -- MySQL
 -- GROUP_CONCAT "資料群組清單化"未合併前的資料
 SELECT store_name, SUM(SALES), COUNT(STORE_ID),
-	GROUP_CONCAT(SALES ORDER BY SALES DESC SEPARATOR '/')
+	   GROUP_CONCAT(SALES ORDER BY SALES DESC SEPARATOR '/')
 FROM store_information
 GROUP BY store_name;
 
@@ -138,5 +138,38 @@ FROM STORE_INFORMATION
 GROUP BY STORE_NAME;
 
 
+SELECT store_name, SUM(SALES), COUNT(STORE_ID)
+FROM store_information
+GROUP BY store_name
+HAVING SUM(SALES) > 3000;
 
+-- alias 欄位別名
+-- 1. AS 可省略
+-- 2. 欄位別名雙引號可省略(但不可有空白)
+SELECT store_name, SUM(SALES), COUNT(STORE_ID) "COUNT STORE",
+	   GROUP_CONCAT(SALES ORDER BY SALES DESC SEPARATOR '/') AS "SALES LIST"
+FROM store_information;
+
+-- -- alias 表格別名(不須加雙引號)
+SELECT store.store_name
+FROM store_information store;
+
+
+SELECT S.store_name
+FROM store_information S;
+
+SELECT store_name, SUM(SALES) "SUM_SALES", COUNT(STORE_ID)
+FROM store_information
+GROUP BY store_name
+ORDER BY SUM_SALES;
+
+
+-- 計算和統計「個別商店」的以下三項資料：
+-- 「總合營業額」、「商店資料個數」、「平均營業額」
+
+-- 搜尋或排除條件如下：
+-- 排除「平均營業額」1000(含)以下的商店資料
+-- 排除「商店資料個數」1(含)個以下的商店資料
+-- 依照「平均營業額」由大至小排序
+-- PS:使用別名語法簡化「表格名稱」及查詢結果「欄位名稱」
 
