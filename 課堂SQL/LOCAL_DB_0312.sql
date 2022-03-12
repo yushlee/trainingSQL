@@ -53,3 +53,29 @@ FROM store_information
 WHERE STORE_DATE BETWEEN '2018-03-01 00:00:00' AND '2018-05-31 23:59:59';
 
 
+SELECT STORE_ID,STORE_NAME,SALES 
+FROM store_information
+WHERE STORE_NAME LIKE 'B%';
+
+SELECT STORE_ID,STORE_NAME,SALES 
+FROM store_information
+WHERE STORE_NAME LIKE '%s';
+
+
+SELECT STORE_ID,STORE_NAME,SALES 
+FROM store_information
+WHERE STORE_NAME LIKE '%An%';
+
+
+SELECT STORE_ID,STORE_NAME,SALES 
+FROM store_information
+WHERE STORE_NAME LIKE 'L%s';
+
+-- 1.「且」找出屬於西區的商店
+-- 2.「且」營業額大於300(包含300)
+-- 3.「且」商店名稱“L”開頭
+-- 4.「或」營業日介於2018年3月至4月
+SELECT * FROM store_information
+WHERE geography_id = 2;
+
+
