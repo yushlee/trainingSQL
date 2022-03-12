@@ -64,18 +64,38 @@ WHERE STORE_NAME LIKE '%s';
 
 SELECT STORE_ID,STORE_NAME,SALES 
 FROM store_information
-WHERE STORE_NAME LIKE '%An%';
+WHERE STORE_NAME LIKE '%an%';
 
 
 SELECT STORE_ID,STORE_NAME,SALES 
 FROM store_information
 WHERE STORE_NAME LIKE 'L%s';
 
--- 1.「且」找出屬於西區的商店
--- 2.「且」營業額大於300(包含300)
--- 3.「且」商店名稱“L”開頭
--- 4.「或」營業日介於2018年3月至4月
-SELECT * FROM store_information
-WHERE geography_id = 2;
 
+SELECT * FROM store_information
+-- 1.「且」找出屬於西區的商店
+WHERE geography_id = 2
+-- 2.「且」營業額大於300(包含300)
+AND sales >= 300
+-- 3.「且」商店名稱“L”開頭
+AND store_name LIKE 'L%'
+-- 4.「或」營業日介於2018年3月至4月
+OR store_date BETWEEN '2018-03-01' AND '2018-04-30';
+
+-- ASC由小到大(預設)
+-- DESC由大到小
+SELECT * 
+FROM store_information
+ORDER BY SALES DESC, store_date DESC;
+
+SELECT * FROM store_information
+ORDER BY STORE_NAME DESC;
+
+-- ORDER BY 可指定欄位的順序號碼做排序
+SELECT STORE_ID ,store_name, sales
+FROM store_information
+ORDER BY 3 DESC;
+
+SELECT SUM(SALES), AVG(SALES), COUNT(STORE_ID), MIN(SALES), MAX(SALES)
+FROM store_information;
 
