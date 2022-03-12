@@ -4,5 +4,26 @@ SELECT * FROM store_information;
 
 SELECT DISTINCT STORE_NAME FROM store_information;
 
--- DISTINCT去重覆是以整列資料為去重覆的依據
-SELECT  DISTINCT STORE_ID,STORE_NAME FROM store_information;
+-- 1.DISTINCT去重覆是以整列資料為去重覆的依據
+-- 2.DISTINCT只能寫一次並且必須在欄位最前面
+SELECT  DISTINCT STORE_ID, STORE_NAME FROM store_information;
+
+SELECT STORE_ID,STORE_NAME,SALES 
+FROM store_information 
+WHERE SALES >= 1500;
+
+-- AND且:條件"嚴僅"
+SELECT STORE_ID,STORE_NAME,SALES 
+FROM store_information 
+WHERE SALES >= 300 AND SALES <= 2500;
+
+-- OR或:條件"寬鬆"
+SELECT STORE_ID,STORE_NAME,SALES 
+FROM store_information
+WHERE STORE_ID = 1 OR STORE_ID = 3;
+
+
+SELECT STORE_ID,STORE_NAME,SALES 
+FROM store_information
+WHERE SALES > 1000 
+OR (SALES > 275 AND SALES < 500);
