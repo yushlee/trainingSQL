@@ -176,3 +176,19 @@ FROM store_information
 GROUP BY store_name
 HAVING AVG(SALES) > 1000 AND COUNT(STORE_ID) > 1
 ORDER BY AVG(SALES) DESC;
+
+
+SELECT store_name, SUM(SALES) "SUM_SALES", COUNT(STORE_ID) "COUNT_STORE", AVG(SALES) "AVG_SALES"
+FROM store_information
+GROUP BY store_name;
+
+SELECT store_name, SUM(SALES) "SUM_SALES", COUNT(STORE_ID) "COUNT_STORE", CEIL(AVG(SALES)) "AVG_SALES"
+FROM store_information
+GROUP BY store_name;
+
+-- CEIL(x)：返回大於或等於x的最大整數值(無條件進位)
+-- FLOOR( x)：返回小於或等於x的最小整數值(無條件捨去)
+-- ROUND(x ,[y]) 返回(四捨五入)到小數點右邊y位的x值,y預設值為0
+-- 如果y是負數，則捨入到小數點左邊相應的整數位上
+SELECT CEIL(123.3), FLOOR(123.9), ROUND(123.456, 1);
+
