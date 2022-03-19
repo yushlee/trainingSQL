@@ -101,9 +101,11 @@ SELECT ISNULL(NULL, 0);
 -- 資料結果依區域的商店個數由大至小排序
 -- (依據商店名稱,不包含重覆的商店)
 -- (不論該區域底下是否有所屬商店)
-
-
-
+SELECT G.REGION_NAME, COUNT(DISTINCT S.store_name) "COUNT_STORE"
+FROM geography G LEFT JOIN store_information S
+ON G.GEOGRAPHY_ID = S.geography_id
+GROUP BY G.REGION_NAME
+ORDER BY COUNT_STORE DESC;
 
 
 
