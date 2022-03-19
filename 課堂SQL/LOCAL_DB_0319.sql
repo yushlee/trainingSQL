@@ -85,11 +85,23 @@ FROM STORE_INFORMATION;
 -- 查詢各區域的營業額總計
 -- 資料結果依營業額總計由大到小排序
 -- (不論該區域底下是否有所屬商店)
-
-SELECT G.*, S.*
-FROM geography G JOIN store_information S
+SELECT G.REGION_NAME, IFNULL(SUM(S.sales), 0) "SUM_SALES"
+FROM geography G LEFT JOIN store_information S
 ON G.GEOGRAPHY_ID = S.geography_id
-ORDER BY G.GEOGRAPHY_ID;
+GROUP BY G.REGION_NAME
+ORDER BY SUM_SALES DESC;
+
+-- Oracle NVL 判斷NULL
+SELECT NVL(NULL, 0) FROM DUAL;
+
+-- MS SQL NVL 判斷NULL
+SELECT ISNULL(NULL, 0);
+
+-- 查詢各區域的商店個數
+-- 資料結果依區域的商店個數由大至小排序
+-- (依據商店名稱,不包含重覆的商店)
+-- (不論該區域底下是否有所屬商店)
+
 
 
 
