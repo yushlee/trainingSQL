@@ -190,5 +190,10 @@ GROUP BY store_name;
 -- FLOOR( x)：返回小於或等於x的最小整數值(無條件捨去)
 -- ROUND(x ,[y]) 返回(四捨五入)到小數點右邊y位的x值,y預設值為0
 -- 如果y是負數，則捨入到小數點左邊相應的整數位上
+-- MySQL測試涵數不需要FROM DUAL
 SELECT CEIL(123.3), FLOOR(123.9), ROUND(123.456, 1);
+
+-- Oracle From DUAL
+SELECT CEIL(123.3), FLOOR(123.9), ROUND(123.456, 1) FROM DUAL;
+
 
