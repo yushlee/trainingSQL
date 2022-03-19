@@ -45,5 +45,46 @@ JOIN COUNTRIES C ON L.COUNTRY_ID =  C.COUNTRY_ID
 LEFT JOIN EMPLOYEES E ON D.MANAGER_ID = E.EMPLOYEE_ID
 LEFT JOIN JOBS J ON E.JOB_ID = J.JOB_ID;
 
+-- MySQL轉換函數：
+-- 1.DATE_FORMAT(date,format):日期轉字串
+SELECT DATE_FORMAT(SYSDATE(), '%Y-%m-%d %T'),
+-- 2.STR_TO_DATE(str,format):字串轉日期
+STR_TO_DATE('2021-08-15 00:00:00', "%Y-%m-%d %T");
+
+SELECT store_id, store_name, store_date,
+	DATE_FORMAT(store_date, '%m/%d/%Y %T')
+FROM store_information
+WHERE store_date > STR_TO_DATE('01-01-2018', "%m-%d-%Y");
+
+
+-- MS SQL
+-- 1.日期轉字串
+SELECT convert(varchar, getdate(), 100) 'mon dd yyyy hh:mmAM (or PM)'
+SELECT convert(varchar, getdate(), 101) 'mm/dd/yyyy'
+SELECT convert(varchar, getdate(), 102) 'yyyy.mm.dd'
+SELECT convert(varchar, getdate(), 103) 'dd/mm/yyyy'
+SELECT convert(varchar, getdate(), 104) 'dd.mm.yyyy'
+SELECT convert(varchar, getdate(), 105) 'dd-mm-yyyy'
+SELECT convert(varchar, getdate(), 106) 'dd mon yyyy'
+SELECT convert(varchar, getdate(), 107) 'mon dd, yyyy'
+SELECT convert(varchar, getdate(), 108) 'hh:mm:ss'
+SELECT convert(varchar, getdate(), 109) 'mon dd yyyy hh:mm:ss:mmmAM (or PM)'
+SELECT convert(varchar, getdate(), 110) 'mm-dd-yyyy'
+SELECT convert(varchar, getdate(), 111) 'yyyy/mm/dd'
+SELECT convert(varchar, getdate(), 112) 'yyyymmdd'
+SELECT convert(varchar, getdate(), 113) 'dd mon yyyy hh:mm:ss:mmm'
+SELECT convert(varchar, getdate(), 114) 'hh:mm:ss:mmm(24h)'
+SELECT convert(varchar, getdate(), 120) 'yyyy-mm-dd hh:mm:ss(24h)'
+SELECT convert(varchar, getdate(), 121) 'yyyy-mm-dd hh:mm:ss.mmm'
+SELECT convert(varchar, getdate(), 126) 'yyyy-mm-ddThh:mm:ss.mmm'
+
+-- 2.字串轉日期
+SELECT convert(datetime, '2021-08-16 21:52:22', 120)　'yyyy-mm-dd hh:mm:ss(24h)'
+
+
+
+
+
+
 
 
