@@ -11,8 +11,7 @@ SELECT * FROM CLASS;
 SELECT * FROM STUDENT;
 SELECT * FROM classstudent_relation;
 
-SELECT * FROM geography;
-SELECT * FROM store_information;
+
 
 -- View
 CREATE VIEW REGION_SALES_AVG AS (
@@ -37,6 +36,21 @@ ALTER TABLE STORE_INFORMATION MODIFY NUM_OF_CUSTOMER VARCHAR(20);
 -- 刪去一個欄位
 ALTER TABLE STORE_INFORMATION DROP COLUMN NUM_OF_CUSTOMER;
 
+
+SELECT * FROM geography;
+SELECT * FROM store_information;
+
+-- 1.INSERT 新增資料到資料表中
+INSERT INTO store_information (STORE_ID, STORE_NAME, SALES, STORE_DATE, GEOGRAPHY_ID)
+VALUE(10, 'Apple Inc', 6000, STR_TO_DATE('2021-08-15 16:07:45', "%Y-%m-%d %T"), 3);
+
+-- "全欄位"值新增可省略欄位名稱
+INSERT INTO store_information VALUE(10, 'Apple Inc', 6000, STR_TO_DATE('2021-08-15 16:07:45', "%Y-%m-%d %T"), 3);
+
+
+
+-- 2.UPDATE 更改資料表中的資料
+-- 3.DELETE 刪除資料表中的資料
 
 
 
