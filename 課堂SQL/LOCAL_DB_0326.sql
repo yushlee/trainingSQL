@@ -62,4 +62,14 @@ WHERE STORE_ID = 3;
 DELETE FROM store_information WHERE STORE_ID = 9;
 
 
+SELECT * FROM TABLE_A;
 
+INSERT INTO TABLE_A VALUE('A');
+INSERT INTO TABLE_A VALUE('B');
+INSERT INTO TABLE_A VALUE('C');
+
+-- 如進行資料異動操作後最後須執行交易提交commit的動作資料方可異動成功
+COMMIT;
+
+-- ROLLBACK 資料回滾(倒回)
+ROLLBACK;
