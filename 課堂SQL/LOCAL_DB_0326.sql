@@ -59,7 +59,7 @@ SET STORE_NAME = 'BOSTOM', SALES = 1555
 WHERE STORE_ID = 3;
 
 -- 3.DELETE 刪除資料表中的資料
-
+DELETE FROM store_information WHERE STORE_ID = 9;
 
 
 
