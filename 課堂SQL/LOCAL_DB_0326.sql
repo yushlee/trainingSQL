@@ -45,11 +45,19 @@ INSERT INTO store_information (STORE_ID, STORE_NAME, SALES, STORE_DATE, GEOGRAPH
 VALUE(10, 'Apple Inc', 6000, STR_TO_DATE('2021-08-15 16:07:45', "%Y-%m-%d %T"), 3);
 
 -- "全欄位"值新增可省略欄位名稱
-INSERT INTO store_information VALUE(10, 'Apple Inc', 6000, STR_TO_DATE('2021-08-15 16:07:45', "%Y-%m-%d %T"), 3);
+INSERT INTO store_information VALUE (10, 'Apple Inc', 6000, STR_TO_DATE('2021-08-15 16:07:45', "%Y-%m-%d %T"), 3);
 
-
+-- INSERT資料表的來源可透過SELECT SQL的查詢結果
+INSERT INTO store_information_2 (STORE_ID, STORE_NAME, SALES, STORE_DATE, GEOGRAPHY_ID)
+SELECT STORE_ID, STORE_NAME, SALES, STORE_DATE, GEOGRAPHY_ID
+FROM store_information
+WHERE SALES > 2000;
 
 -- 2.UPDATE 更改資料表中的資料
+UPDATE store_information 
+SET STORE_NAME = 'BOSTOM', SALES = 1555
+WHERE STORE_ID = 3;
+
 -- 3.DELETE 刪除資料表中的資料
 
 
