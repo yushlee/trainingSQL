@@ -82,6 +82,16 @@ SELECT convert(varchar, getdate(), 126) 'yyyy-mm-ddThh:mm:ss.mmm'
 SELECT convert(datetime, '2021-08-16 21:52:22', 120)　'yyyy-mm-dd hh:mm:ss(24h)'
 
 
+-- Oracle 轉換函數：
+-- 1.TO_CHAR(d , format)：日期轉字串
+SELECT TO_CHAR(sysdate,'YYYY-mm-DD HH24:MI:SS'),
+  -- 2.TO_DATE(string ,format)：字串轉日期
+  TO_DATE('2018-05-15 12:30:23','YYYY-mm-DD HH24:MI:SS'),
+  -- 3.TO_TIMESTAMP(string,  [format])：字串轉日期
+  TO_TIMESTAMP( '2011-12-23 12:30:23.999', 'YYYY-MM-DD HH24:MI:SS.FF3'),
+  -- 4.TO_NUMBER(STRING)：字串轉數字
+  TO_NUMBER('3') + TO_NUMBER('2')
+FROM DUAL;
 
 
 
