@@ -27,6 +27,29 @@ FROM geography G
 RIGHT JOIN store_information S ON G.GEOGRAPHY_ID = S.GEOGRAPHY_ID;
 
 
+-- SQL UNION ALL 聯集(包含重覆值)
+SELECT STORE_NAME FROM store_information
+UNION ALL
+SELECT STORE_NAME FROM store_information;
+
+
+-- SQL INTERSECT 交集 (MySQL沒支援)
+-- 結果結果:1,2
+-- 1,2,null
+SELECT GEOGRAPHY_ID FROM store_information
+INTERSECT
+-- 1,2,3
+SELECT GEOGRAPHY_ID FROM geography;
+
+
+-- SQL MINUS 排除(不包含重覆值) (MySQL沒支援)
+-- MINUS (Oracle)、EXCEPT (MS SQL)
+-- 結果結果:3
+-- 1,2,3
+SELECT GEOGRAPHY_ID FROM geography
+MINUS
+-- 1,2,null
+SELECT GEOGRAPHY_ID FROM store_information;
 
 
 
