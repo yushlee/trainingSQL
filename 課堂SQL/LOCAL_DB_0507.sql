@@ -1,3 +1,4 @@
+-- SELECT(選取)、FROM(資料來源表格)
 SELECT STORE_NAME FROM store_information;
 
 SELECT STORE_ID, STORE_NAME FROM store_information;
@@ -5,4 +6,28 @@ SELECT STORE_ID, STORE_NAME FROM store_information;
 SELECT STORE_ID, SALES, STORE_NAME FROM store_information;
 
 SELECT * FROM STORE_INFORMATION;
+
+-- DISTINCT(資料去重覆)
+-- 整列資料欄是否重覆為依據
+-- 只能下一次而且要在欄位的開頭
+SELECT DISTINCT STORE_NAME FROM store_information;
+SELECT DISTINCT STORE_ID,  STORE_NAME FROM STORE_INFORMATION;
+
+
+-- AND且(嚴僅)資料限縮
+-- OR或(寬鬆)資料擴展
+SELECT STORE_ID, STORE_NAME, SALES, STORE_DATE
+FROM store_information
+WHERE SALES > 250
+AND STORE_DATE > '2018-03-01';
+
+
+SELECT STORE_ID, STORE_NAME, SALES, STORE_DATE
+FROM store_information
+WHERE SALES > 2500 
+OR STORE_DATE > '2018-05-01';
+
+
+
+
 
