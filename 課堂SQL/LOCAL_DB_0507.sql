@@ -1,0 +1,8 @@
+SELECT STORE_NAME FROM store_information;
+
+SELECT STORE_ID, STORE_NAME FROM store_information;
+
+SELECT STORE_ID, SALES, STORE_NAME FROM store_information;
+
+SELECT * FROM STORE_INFORMATION;
+
