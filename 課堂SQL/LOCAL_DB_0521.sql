@@ -55,5 +55,48 @@ WHERE S.GEOGRAPHY_ID IS NULL;
 
 
 --   SQL SubQuery 子查詢
+-- 找出營業額最高的商店資料
+
+-- 外查詢
+SELECT * FROM store_information
+WHERE SALES = (
+	-- 內查詢
+	SELECT MAX(SALES) FROM store_information
+);
+
+
+-- 『簡單子查詢』 (Simple Subquery)
+-- 外查詢
+SELECT SUM(SALES)
+FROM store_information
+WHERE GEOGRAPHY_ID IN (
+	-- 內查詢
+	SELECT GEOGRAPHY_ID FROM geography WHERE REGION_NAME = 'West'
+);
+
+
+-- 『相關子查詢』(Correlated Subquery)
+SELECT SUM(S.SALES)
+FROM store_information S
+WHERE S.GEOGRAPHY_ID IN (
+	-- 內查詢
+	SELECT GEOGRAPHY_ID G
+    FROM geography G WHERE G.GEOGRAPHY_ID = S.GEOGRAPHY_ID
+);
+
+
+SELECT  G.*, S.*
+FROM (
+   SELECT GEOGRAPHY_ID, REGION_NAME FROM GEOGRAPHY
+) G , 
+(
+   SELECT GEOGRAPHY_ID, STORE_ID, STORE_NAME 
+   FROM STORE_INFORMATION
+) S
+WHERE G.GEOGRAPHY_ID = S.GEOGRAPHY_ID;
+
+
+
+
 --   SQL EXISTS 存在式關聯查詢
 --   SQL CASE WHEN 條件查詢
