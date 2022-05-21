@@ -1,0 +1,33 @@
+--   SQL UNION 聯集(不包含重覆值)
+-- 各SQL查詢(欄位個數必須一致、欄位型別必須一致)
+SELECT STORE_ID, STORE_NAME FROM store_information
+UNION
+SELECT GEOGRAPHY_ID,REGION_NAME FROM geography;
+
+
+-- MySQL 透過UNION查詢將LEFT JOIN、RIGHT JOIN合併查詢實現FULL JOIN
+SELECT G.GEOGRAPHY_ID, G.REGION_NAME, S.STORE_ID, S.STORE_NAME, S.STORE_DATE
+FROM geography G 
+LEFT JOIN store_information S ON G.GEOGRAPHY_ID = S.GEOGRAPHY_ID
+UNION
+SELECT G.GEOGRAPHY_ID, G.REGION_NAME, S.STORE_ID, S.STORE_NAME, S.STORE_DATE
+FROM geography G 
+RIGHT JOIN store_information S ON G.GEOGRAPHY_ID = S.GEOGRAPHY_ID;
+
+--   SQL UNION ALL 聯集(包含重覆值)
+SELECT STORE_NAME FROM store_information
+UNION ALL
+SELECT REGION_NAME FROM geography;
+
+
+--   SQL INTERSECT 交集(PS:MySQL不支援INTERSECT)
+-- 請注意，在 INTERSECT 指令下，不同的值只會被列出一次。 
+-- 1、2、3
+SELECT GEOGRAPHY_ID FROM geography
+INTERSECT
+SELECT GEOGRAPHY_ID FROM store_information;
+
+--   SQL MINUS 排除(不包含重覆值) 
+--   SQL SubQuery 子查詢
+--   SQL EXISTS 存在式關聯查詢
+--   SQL CASE WHEN 條件查詢
