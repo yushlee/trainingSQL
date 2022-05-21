@@ -119,5 +119,38 @@ S AS (
 )
 SELECT * FROM S ORDER BY S.STORE_ID;
 
+
 --   SQL EXISTS 存在式關聯查詢
+-- EXISTS 是用來測試「內查詢」有沒有產生任何結果。
+-- 如果有的話，系統就會執行「外查詢」中的 SQL。
+-- 若是沒有的話，那整個 SQL 語句就不會產生任何結果。
+SELECT SUM(SALES) 
+FROM store_information
+-- EXISTS 是否存在
+WHERE EXISTS (
+	SELECT * FROM geography WHERE REGION_NAME = 'West'
+);
+
+SELECT SUM(SALES) 
+FROM store_information
+-- NOT EXISTS 是否不存在
+WHERE NOT EXISTS (
+	SELECT * FROM geography WHERE REGION_NAME = 'West'
+);
+
+-- EXISTS + 關聯式子查詢
+SELECT SUM(S.SALES) 
+FROM store_information S
+-- EXISTS 是否存在
+WHERE EXISTS (
+	SELECT * FROM geography G
+    WHERE G.GEOGRAPHY_ID = S.GEOGRAPHY_ID
+    AND REGION_NAME = 'West'
+);
+
+
+
 --   SQL CASE WHEN 條件查詢
+
+
+
