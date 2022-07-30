@@ -252,4 +252,161 @@ FROM STORE_INFORMATION
 ORDER BY GEOGRAPHY_ID, SALES;
 
 
+SELECT STORE_ID, STORE_NAME,
+    ROW_NUMBER( ) OVER (ORDER BY SALES) ROWNO_STORE,
+    SALES,
+    -- 依「營業額」排序取"上一個"營業額
+    LAG(SALES) OVER (ORDER BY SALES) PREV_SALES,
+    -- 依「營業額」排序取"下一個"營業額
+    LEAD(SALES) OVER (ORDER BY SALES) NEXT_SALES
+FROM STORE_INFORMATION
+ORDER BY SALES;
+
+-- CEIL(x)：返回大於或等於x的最大整數值(無條件進位)
+-- FLOOR(x)：返回小於或等於x的最小整數值(無條件捨去)
+-- ROUND(x ,[y])：返回(四捨五入)到小數點右邊y位的x值,y預設值為0
+SELECT CEIL(1.1), FLOOR(1.9), ROUND(1.125, 2);
+
+-- MySQL
+SELECT SYSDATE(), YEAR(SYSDATE()), MONTH(SYSDATE()), DAY(SYSDATE()),
+HOUR(SYSDATE()), MINUTE(SYSDATE()), SECOND(SYSDATE());
+
+SELECT STORE_DATE, YEAR(STORE_DATE) 
+FROM STORE_INFORMATION
+ORDER BY STORE_DATE;
+
+SELECT STORE_DATE, MONTH(STORE_DATE)
+FROM STORE_INFORMATION
+WHERE MONTH(STORE_DATE) = 03
+ORDER BY STORE_DATE;
+
+
+-- MS SQL
+SELECT GETDATE(), YEAR(GETDATE()), MONTH(GETDATE()), DAY(GETDATE());
+SELECT GETDATE() 'Today',
+DATEPART(year,GETDATE()) 'Year Part',
+DATEPART(month,GETDATE()) 'Month Part',
+DATEPART(day,GETDATE()) 'Day Part',
+DATEPART(hour,GETDATE()) 'Hour Part',
+DATEPART(minute,GETDATE()) 'Minute Part',
+DATEPART(second,GETDATE()) 'Second Part',
+DATEPART(millisecond,GETDATE()) 'MilliSecond Part';
+
+-- Oracle
+-- 1.ADD_MONTHS(d,x)：返回日期d加上x個月的結果
+SELECT ADD_MONTHS(TO_DATE('2018/08/15', 'YYYY/mm/DD'), 3),
+-- 2.LAST_DAY(D)：返回日期D的月份的最後一天的日期
+LAST_DAY(TO_DATE('2008/02/01', 'YYYY/mm/DD')),
+-- 3.MONTHS_BETWEEN(date1,date2)：返回在 date1 和 date2 相差的月份數.
+MONTHS_BETWEEN(
+  TO_DATE('2008/04/01', 'YYYY/mm/DD'), TO_DATE('2008/02/01', 'YYYY/mm/DD')
+) MONTHS_BETWEEN,
+-- 如果‘日’相同或 date1 和 date2 都是所在月最后一天，則返回整數
+-- 否則返回的結果將包含一個小數點部分(Oracle以每月31天為計算結果的小數部分)
+MONTHS_BETWEEN(
+  -- 15.5/31 = 0.5
+  TO_DATE('2018/02/16 12:00', 'YYYY/mm/DD HH24:MI'), TO_DATE('2018/02/01', 'YYYY/mm/DD')
+) MONTHS_BETWEEN_DIFF,
+-- 4.SYSDATE：返回當前的日期和時間
+TO_CHAR(SYSDATE,'YYYY-mm-DD HH24:MI:SS'),
+-- 5. TRUNC(D , [FORMAT])：對日期作無條件捨去運算
+-- MONTH(月捨去)、YEAR(年捨去)、不帶FORMAT(日捨去)
+TRUNC(
+    TO_DATE('2018/05/15', 'YYYY/mm/DD'), 'MONTH'
+) TRUNC_MONTH,
+TRUNC(
+    TO_DATE('2018/05/15', 'YYYY/mm/DD'), 'YEAR'
+) TRUNC_YEAR,
+TRUNC(
+    TO_DATE('2018/05/15 17:45:36', 'YYYY-mm-DD HH24:MI:SS')
+) TRUNC_DAY
+FROM DUAL;
+
+
+--  Oracle日期算術:
+-- 1.d1–d2：返回d1和d2之間相差的天數
+SELECT  (TO_DATE('2018/05/15','YYYY-mm-DD') - TO_DATE('2018/05/01','YYYY-mm-DD'))  DIFF_DAY,
+-- 2.d1+ n ：在d1上加上n天并作為date類型返回結果
+(TO_DATE('2018/05/01','YYYY-mm-DD') +  14)  ADD_DAY,
+-- 3.D1–N ：從D1上減去N天并作為DATE類型返回結果(兩個日期不能相加)
+(TO_DATE('2018/05/15','YYYY-mm-DD') -  14)  SUBTRACT_DAY
+FROM DUAL;
+
+-- Oracle INTERVAL 日期計算
+SELECT SYSDATE,
+SYSDATE - INTERVAL '1' YEAR,
+SYSDATE - INTERVAL '1' MONTH,
+SYSDATE - INTERVAL '1' DAY,
+SYSDATE - INTERVAL '1' HOUR,
+SYSDATE - INTERVAL '1' MINUTE,
+SYSDATE - INTERVAL '1' SECOND
+FROM DUAL;
+
+--  MySQL日期算術:
+SELECT SYSDATE(), 
+DATE_ADD('2021-08-15', INTERVAL -1 DAY),
+DATE_ADD('2021-08-15', INTERVAL 1 MINUTE);
+
+
+-- MS SQL
+SELECT GETDATE(),
+DATEADD(YEAR, 1, GETDATE()) "DATEADD_YEAR",
+DATEADD(MONTH, 1, GETDATE()) "DATEADD_MONTH",
+DATEADD(DAY, 1, GETDATE()) "DATEADD_DAY",
+DATEADD(HOUR, 1, GETDATE()) "DATEADD_HOUR",
+DATEADD(MINUTE, 1, GETDATE()) "DATEADD_MINUTE",
+DATEADD(SECOND, 1, GETDATE()) "DATEADD_SECOND";
+
+SELECT GETDATE(),
+DATEADD(YEAR, -1, GETDATE()) "DATESUB_YEAR";
+
+
+
+-- Oracle 轉換函數：
+-- 1.TO_CHAR(d , format)：日期轉字串
+SELECT TO_CHAR(sysdate,'YYYY-mm-DD HH24:MI:SS'),
+  -- 2.TO_DATE(string ,format)：字串轉日期
+  TO_DATE('2018-05-15 12:30:23','YYYY-mm-DD HH24:MI:SS'),
+  -- 3.TO_TIMESTAMP(string,  [format])：字串轉日期
+  TO_TIMESTAMP( '2011-12-23 12:30:23.999', 'YYYY-MM-DD HH24:MI:SS.FF3'),
+  -- 4.TO_NUMBER(STRING)：字串轉數字
+  TO_NUMBER('3') + TO_NUMBER('2')
+FROM DUAL;
+
+
+-- MySQL轉換函數：
+-- 1.DATE_FORMAT(date,format):日期轉字串
+SELECT DATE_FORMAT(SYSDATE(), '%Y-%m-%d %T'),
+-- 2.STR_TO_DATE(str,format):字串轉日期
+STR_TO_DATE('2021-08-15 00:00:00', "%Y-%m-%d %T"),
+DATE_ADD(STR_TO_DATE('2021-08-15 00:00:00', "%Y-%m-%d %T"), INTERVAL 5 DAY);
+
+SELECT CONVERT(150, CHAR);
+SELECT CONVERT('150', UNSIGNED INTEGER);
+
+
+-- MS SQL
+-- 1.日期轉字串
+SELECT convert(varchar, getdate(), 100) 'mon dd yyyy hh:mmAM (or PM)'
+SELECT convert(varchar, getdate(), 101) 'mm/dd/yyyy'
+SELECT convert(varchar, getdate(), 102) 'yyyy.mm.dd'
+SELECT convert(varchar, getdate(), 103) 'dd/mm/yyyy'
+SELECT convert(varchar, getdate(), 104) 'dd.mm.yyyy'
+SELECT convert(varchar, getdate(), 105) 'dd-mm-yyyy'
+SELECT convert(varchar, getdate(), 106) 'dd mon yyyy'
+SELECT convert(varchar, getdate(), 107) 'mon dd, yyyy'
+SELECT convert(varchar, getdate(), 108) 'hh:mm:ss'
+SELECT convert(varchar, getdate(), 109) 'mon dd yyyy hh:mm:ss:mmmAM (or PM)'
+SELECT convert(varchar, getdate(), 110) 'mm-dd-yyyy'
+SELECT convert(varchar, getdate(), 111) 'yyyy/mm/dd'
+SELECT convert(varchar, getdate(), 112) 'yyyymmdd'
+SELECT convert(varchar, getdate(), 113) 'dd mon yyyy hh:mm:ss:mmm'
+SELECT convert(varchar, getdate(), 114) 'hh:mm:ss:mmm(24h)'
+SELECT convert(varchar, getdate(), 120) 'yyyy-mm-dd hh:mm:ss(24h)'
+SELECT convert(varchar, getdate(), 121) 'yyyy-mm-dd hh:mm:ss.mmm'
+SELECT convert(varchar, getdate(), 126) 'yyyy-mm-ddThh:mm:ss.mmm'
+
+-- 2.字串轉日期
+SELECT convert(datetime, '2021-08-16 21:52:22', 120)　'yyyy-mm-dd hh:mm:ss(24h)'
+
 
