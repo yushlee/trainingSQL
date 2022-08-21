@@ -156,4 +156,24 @@ SELECT STORE_NAME,
 FROM STORE_INFORMATION
 GROUP BY STORE_NAME;
 
+-- HAVING:對函數產生的值來設定條件查尋
+-- 各別加總營業額大於2500
+-- SELECT → FROM → WHERE → GROUP BY → HAVING
+SELECT STORE_NAME, SUM(SALES)
+FROM STORE_INFORMATION
+GROUP BY STORE_NAME
+HAVING SUM(SALES) > 0
+ORDER BY SUM(SALES) DESC;
+
+-- 計算和統計「個別商店」的以下三項資料：
+-- 「總合營業額」、「商店資料個數」、「平均營業額」
+-- 搜尋或排除條件如下：
+-- 排除「平均營業額」1000(含)以下的商店資料
+-- 排除「商店資料個數」1(含)個以下的商店資料
+-- 依照「平均營業額」由大至小排序
+-- PS:使用別名語法簡化「表格名稱」及查詢結果「欄位名稱」
+
+
+
+
 
