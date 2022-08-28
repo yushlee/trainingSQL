@@ -69,6 +69,7 @@ WHERE STORE_NAME LIKE 'L%s';
 SELECT * FROM STORE_INFORMATION
 WHERE STORE_NAME LIKE '%le%';
 
+-- BINARY可指定查尋字母大小寫
 SELECT * FROM STORE_INFORMATION
 WHERE BINARY STORE_NAME LIKE 'S%';
 
@@ -171,8 +172,14 @@ ORDER BY SUM(SALES) DESC;
 -- 排除「平均營業額」1000(含)以下的商店資料
 -- 排除「商店資料個數」1(含)個以下的商店資料
 -- 依照「平均營業額」由大至小排序
--- PS:使用別名語法簡化「表格名稱」及查詢結果「欄位名稱」
+-- PS:使用別名語法簡化「表格名稱」及查詢結果「欄位名稱」 
 
+SELECT STORE_NAME, SUM(SALES), COUNT(STORE_ID), AVG(SALES)
+FROM store_information
+GROUP BY STORE_NAME
+HAVING AVG(SALES) > 1000
+AND COUNT(STORE_ID) > 1
+ORDER BY AVG(SALES) DESC;
 
 
 
