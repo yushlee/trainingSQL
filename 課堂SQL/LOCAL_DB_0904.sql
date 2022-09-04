@@ -185,8 +185,14 @@ UPDATE store_information
 SET STORE_NAME = 'hTC', SALES = 123
 WHERE STORE_ID = 10;
 
-SELECT * FROM store_information;
-
 -- 資料刪除之前先確認資料刪除的範圍
 DELETE FROM store_information WHERE STORE_ID IN (10 ,11);
 
+-- 1號交易員
+SELECT * FROM store_information;
+
+-- 資料倒回(COMMIT之前)
+ROLLBACK;
+
+-- 資料確認交易
+COMMIT;
