@@ -153,5 +153,31 @@ SELECT * FROM Student;
 SELECT * FROM Class;
 SELECT * FROM ClassStudent_Relation;
 
+-- 視圖(VIEWS)
+CREATE VIEW REGION_SUM_VIEW AS (
+	SELECT G.REGION_NAME, IFNULL(SUM(SALES), 0) "SUM_SALES"
+	FROM geography G LEFT JOIN store_information S
+	ON G.GEOGRAPHY_ID = S.GEOGRAPHY_ID
+	GROUP BY G.REGION_NAME
+	ORDER BY SUM_SALES DESC
+);
 
+SELECT * FROM REGION_SUM_VIEW;
 
+SELECT * FROM store_information;
+
+-- 新增一筆資料到商店資料表
+INSERT INTO store_information (STORE_ID,STORE_NAME,SALES,STORE_DATE,GEOGRAPHY_ID) 
+VALUE(10, 'Apple Inc', 6000, STR_TO_DATE('2022-09-04', '%Y-%m-%d'), 3);
+
+-- 若新增欄位值已經是全欄位,則欄位名稱可省略不寫
+INSERT INTO store_information VALUE(11, 'Apple Inc', 6000, STR_TO_DATE('2022-09-04', '%Y-%m-%d'), 3);
+
+SELECT * FROM region_sum ORDER BY SUM_SALES DESC;
+
+INSERT INTO region_sum (REGION_NAME, SUM_SALES) (
+	SELECT G.REGION_NAME, IFNULL(SUM(SALES), 0) "SUM_SALES"
+	FROM geography G LEFT JOIN store_information S
+	ON G.GEOGRAPHY_ID = S.GEOGRAPHY_ID
+	GROUP BY G.REGION_NAME
+);
