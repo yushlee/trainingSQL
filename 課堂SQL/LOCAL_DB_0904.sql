@@ -164,8 +164,6 @@ CREATE VIEW REGION_SUM_VIEW AS (
 
 SELECT * FROM REGION_SUM_VIEW;
 
-SELECT * FROM store_information;
-
 -- 新增一筆資料到商店資料表
 INSERT INTO store_information (STORE_ID,STORE_NAME,SALES,STORE_DATE,GEOGRAPHY_ID) 
 VALUE(10, 'Apple Inc', 6000, STR_TO_DATE('2022-09-04', '%Y-%m-%d'), 3);
@@ -181,3 +179,14 @@ INSERT INTO region_sum (REGION_NAME, SUM_SALES) (
 	ON G.GEOGRAPHY_ID = S.GEOGRAPHY_ID
 	GROUP BY G.REGION_NAME
 );
+
+-- 資料更新之前先確認資料更新的範圍
+UPDATE store_information 
+SET STORE_NAME = 'hTC', SALES = 123
+WHERE STORE_ID = 10;
+
+SELECT * FROM store_information;
+
+-- 資料刪除之前先確認資料刪除的範圍
+DELETE FROM store_information WHERE STORE_ID IN (10 ,11);
+
