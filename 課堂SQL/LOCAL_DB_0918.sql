@@ -298,3 +298,18 @@ SELECT STORE_ID, STORE_NAME, SALES, GEOGRAPHY_ID,
 FROM store_information
 ORDER BY GEOGRAPHY_ID, SALES DESC;
 
+-- Analytic Functions with OVER Clause (分析函數) 
+SELECT STORE_ID, STORE_NAME, SALES,
+    -- 依「營業額」排序取"上一個"營業額
+    LAG(SALES) OVER (ORDER BY SALES) PREV_SALES,
+    -- 依「營業額」排序取"下一個"營業額
+    LEAD(SALES) OVER (ORDER BY SALES) NEXT_SALES
+FROM store_information
+ORDER BY SALES;
+
+
+
+
+
+
+
