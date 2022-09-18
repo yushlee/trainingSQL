@@ -172,9 +172,68 @@ FROM DEP_EMP E, DEPARTMENTS D
 WHERE E.DEPARTMENT_ID = D.DEPARTMENT_ID
 ORDER BY E.DEP_AVG_SALARY DESC, E.SALARY;
 
-
-
+-- 運用子查詢來達成資料分頁功能
+SELECT * FROM (
+	SELECT ROW_NUMBER()OVER(ORDER BY STORE_ID) ROW_NO, 
+	S.* FROM store_information S
+) S
+WHERE ROW_NO BETWEEN 4 AND 6;
 
 
 --   SQL EXISTS 存在式關聯查詢
---   SQL CASE WHEN 條件查詢
+-- EXISTS 是用來測試「內查詢」有沒有產生任何結果。
+-- 如果有的話，系統就會執行「外查詢」中的 SQL。
+-- 若是沒有的話，那整個 SQL 語句就不會產生任何結果。
+-- 13,250
+-- 外查詢
+SELECT SUM(SALES) 
+FROM store_information
+WHERE EXISTS (
+	-- 內查詢
+	SELECT * FROM geography WHERE REGION_NAME = 'West'
+);
+
+-- EXISTS可搭配關聯式查詢就可達成資料條件限縮
+-- 外查詢
+SELECT SUM(SALES) 
+FROM store_information S
+WHERE EXISTS (
+	-- 內查詢
+	SELECT * FROM geography G 
+    WHERE S.GEOGRAPHY_ID = G.GEOGRAPHY_ID
+    AND G.REGION_NAME = 'West'
+);
+
+-- NOT EXISTS(是否不存在)
+-- 外查詢
+SELECT S.*
+FROM store_information S
+WHERE NOT EXISTS (
+	-- 內查詢
+	SELECT * FROM geography G 
+);
+
+
+-- SQL CASE WHEN 條件查詢
+-- 1.CASE 後面接欄位
+SELECT STORE_ID, STORE_NAME, SALES,
+	CASE STORE_NAME
+		WHEN 'Boston' THEN SALES * 2
+        WHEN 'Los Angeles' THEN SALES * 1.5
+        ELSE SALES
+	END NEW_SALES
+FROM store_information
+ORDER BY STORE_NAME;
+
+-- 2.CASE 後面不接欄位
+SELECT STORE_ID, STORE_NAME, SALES,
+	CASE
+		WHEN (SALES BETWEEN 0 AND 1000) THEN '0-1000'
+        WHEN (SALES BETWEEN 1001 AND 2000) THEN '1001-2000'
+        WHEN (SALES BETWEEN 2001 AND 3000) THEN '2001-3000'
+        WHEN (SALES > 300) THEN '>3000'
+	END SALES_RANGE
+FROM store_information
+ORDER BY SALES;
+
+
