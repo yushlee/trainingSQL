@@ -1,5 +1,6 @@
---   SQL UNION 聯集(不包含重覆值)
-
+-- SQL UNION 聯集(不包含重覆值)
+-- 1.查詢「欄位個數」必須要一致
+-- 2.查詢「欄位型態」必須要一致
 -- 1,2,3
 SELECT GEOGRAPHY_ID FROM geography
 UNION
@@ -17,7 +18,27 @@ RIGHT JOIN store_information S ON G.GEOGRAPHY_ID = S.GEOGRAPHY_ID;
 
 
 --   SQL UNION ALL 聯集(包含重覆值)
---   SQL INTERSECT 交集
+-- 1,2,3
+SELECT GEOGRAPHY_ID FROM geography
+UNION ALL
+-- null,1,2
+SELECT GEOGRAPHY_ID FROM store_information;
+
+--  SQL INTERSECT 交集
+--  MySQL不支援INTERSECT
+-- 1,2,3
+SELECT GEOGRAPHY_ID FROM geography
+INTERSECT
+-- null,1,2
+SELECT GEOGRAPHY_ID FROM store_information;
+
+-- MySQL INTERSECT交集查詢替代方案
+-- INNER JOIN + DISTINCT = INTERSECT 查詢交集結果
+SELECT DISTINCT G.GEOGRAPHY_ID
+FROM geography G
+JOIN store_information S ON G.GEOGRAPHY_ID = S.GEOGRAPHY_ID;
+
+
 --   SQL MINUS 排除(不包含重覆值) 
 --   SQL SubQuery 子查詢
 --   SQL EXISTS 存在式關聯查詢
