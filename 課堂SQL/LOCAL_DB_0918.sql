@@ -32,7 +32,9 @@ INTERSECT
 -- null,1,2
 SELECT GEOGRAPHY_ID FROM store_information;
 
+
 -- MySQL INTERSECT交集查詢替代方案
+-- https://www.yiibai.com/mysql/sql-union-mysql.html
 -- INNER JOIN + DISTINCT = INTERSECT 查詢交集結果
 SELECT DISTINCT G.GEOGRAPHY_ID
 FROM geography G
@@ -40,6 +42,9 @@ JOIN store_information S ON G.GEOGRAPHY_ID = S.GEOGRAPHY_ID;
 
 
 --   SQL MINUS 排除(不包含重覆值) 
+
+
+
 --   SQL SubQuery 子查詢
 --   SQL EXISTS 存在式關聯查詢
 --   SQL CASE WHEN 條件查詢
