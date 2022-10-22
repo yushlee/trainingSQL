@@ -185,6 +185,15 @@ ORDER BY SUM(SALES) ASC;
 -- 排除「商店資料個數」1(含)個以下的商店資料
 -- 依照「平均營業額」由大至小排序
 -- PS:使用別名語法簡化「表格名稱」及查詢結果「欄位名稱」
+SELECT STORE_NAME, SUM(SALES), COUNT(STORE_ID), FLOOR(AVG(SALES))
+FROM STORE_INFORMATION
+GROUP BY STORE_NAME
+HAVING AVG(SALES) > 1000 AND COUNT(STORE_ID) > 1
+ORDER BY AVG(SALES) DESC;
+
+-- 無條件捨去 FLOOR( x)：返回小於或等於x的最小整數值(無條件捨去)
+-- 無條件進位 CEIL(x)：返回大於或等於x的最大整數值(無條件進位)
+-- 四捨五入 ROUND(x ,[y]) : 返回(四捨五入)到小數點右邊y位的x值,y預設值為0
 
 
 
