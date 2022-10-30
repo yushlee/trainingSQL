@@ -79,7 +79,7 @@ WHERE STORE_NAME LIKE 'L%s';
 SELECT * FROM STORE_INFORMATION
 WHERE STORE_NAME LIKE '%An%';
 
-
+-- SQL 練習題(一)
 -- 1.「且」找出屬於西區的商店
 -- 2.「且」營業額大於300(包含300)
 -- 3.「且」商店名稱“L”開頭
@@ -173,12 +173,20 @@ GROUP BY STORE_NAME
 HAVING SUM(SALES) >= 3000
 ORDER BY SUM(SALES) DESC;
 
-
+-- SQL 練習題(二)
 -- 計算和統計「個別商店」的以下三項資料：
 -- 「總合營業額」、「商店資料個數」、「平均營業額」
+
 -- 搜尋或排除條件如下：
 -- 排除「平均營業額」1000(含)以下的商店資料
 -- 排除「商店資料個數」1(含)個以下的商店資料
 -- 依照「平均營業額」由大至小排序
 -- PS:使用別名語法簡化「表格名稱」及查詢結果「欄位名稱」
+SELECT STORE_NAME, SUM(SALES), COUNT(STORE_ID), AVG(SALES) 
+FROM STORE_INFORMATION
+GROUP BY STORE_NAME
+HAVING AVG(SALES) > 1000 AND COUNT(STORE_ID) > 1
+ORDER BY AVG(SALES) DESC;
+
+
 
