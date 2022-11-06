@@ -96,3 +96,18 @@ SELECT STORE_ID, STORE_NAME, CONCAT(STORE_ID, STORE_NAME),
   STORE_ID || '-'  || STORE_NAME
 FROM STORE_INFORMATION;
 
+
+-- substring函數是用來抓出一個欄位資料中的其中一部分
+SELECT STORE_ID, STORE_NAME, 
+	-- 選出所有從第<pos>位置開始的字元
+	SUBSTR(STORE_NAME, 5), 
+    -- <pos>位置開始，選出接下去的<len>個字元
+	SUBSTR(STORE_NAME, 2, 3)
+FROM STORE_INFORMATION;
+
+
+-- TRIM 函數是用來移除掉一個字串中的字頭或字尾。最常見的用途是移除字首或字尾的空白
+SELECT STORE_ID, STORE_NAME, 
+	LTRIM(STORE_NAME), RTRIM(STORE_NAME), TRIM(STORE_NAME)
+FROM STORE_INFORMATION;
+
