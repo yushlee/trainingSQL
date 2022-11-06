@@ -111,3 +111,30 @@ SELECT STORE_ID, STORE_NAME,
 	LTRIM(STORE_NAME), RTRIM(STORE_NAME), TRIM(STORE_NAME)
 FROM STORE_INFORMATION;
 
+
+-- TRIM([[位置] [要移除的字串] FROM ] 字串):
+--  [位置] 的可能值為 LEADING (起頭), TRAILING (結尾), or BOTH (起頭及
+-- 結尾)。 這個函數將把 [要移除的字串] 從字串的起頭、結尾，或是起頭及結尾移除。
+-- TRIM([[位置] [要移除的字串] FROM ] 字串)
+-- [位置] 的可能值為 LEADING (起頭), TRAILING (結尾), or BOTH (起頭及結尾)
+SELECT STORE_ID, STORE_NAME,
+    TRIM(LEADING 'Bos' FROM STORE_NAME),
+    TRIM(TRAILING 's' FROM STORE_NAME),
+    TRIM(BOTH 'L' FROM STORE_NAME)
+FROM STORE_INFORMATION;
+
+
+-- SQL 練習題(三)
+-- 查詢各區域的營業額總計
+-- 資料結果依營業額總計由大到小排序
+-- (不論該區域底下是否有所屬商店)
+SELECT G.*, S.* 
+FROM GEOGRAPHY G LEFT JOIN STORE_INFORMATION S
+ON G.GEOGRAPHY_ID = S.GEOGRAPHY_ID;
+
+
+
+
+
+
+
