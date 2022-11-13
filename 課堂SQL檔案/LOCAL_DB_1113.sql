@@ -183,7 +183,7 @@ INSERT INTO STORE_INFORMATION (STORE_ID, STORE_NAME, SALES,STORE_DATE,GEOGRAPHY_
 
 -- 欄位名稱可省略(ps:values必須是全欄位)
 -- 不建議此寫法，因為表格的欄位隨時可能會有所變動
-INSERT INTO STORE_INFORMATION VALUES (11, 'HTC Inc', 3300, '2018-07-09 00:00:00', 3);
+INSERT INTO STORE_INFORMATION VALUES (13, 'HTC Inc', 3300, '2018-07-09 00:00:00', 3);
 
 -- INSERT INTO 能夠讓我們一次輸入多筆的資料
 INSERT INTO STORE_INFORMATION_2 (STORE_ID, STORE_NAME, SALES,STORE_DATE,GEOGRAPHY_ID)
@@ -193,9 +193,21 @@ SELECT STORE_ID, STORE_NAME, SALES,STORE_DATE,GEOGRAPHY_ID FROM STORE_INFORMATIO
 UPDATE STORE_INFORMATION SET STORE_NAME = 'Apple Inc', SALES = 4500 WHERE STORE_ID IN (10,11);
 
 -- 3.DELETE 刪除資料表中的資料
-DELETE FROM STORE_INFORMATION WHERE STORE_ID IN (10,11);
+DELETE FROM STORE_INFORMATION WHERE STORE_ID IN (11,12,13);
 
 
+-- 未提交commit前，進行rollback取消這次交易所有的資料異動指令
 SELECT * FROM STORE_INFORMATION;
 
+
+-- 資料控制語言 DCL (Data Control Language)
+-- 1.	COMMIT 完成交易作業
+-- 	如進行資料異動操作後最後須執行交易提交commit的動作資料方可異動成功
+-- 	交易隔離性：資料庫交易與交易之間彼此獨立，一個交易是看不到另一個交易所異動中的資料
+-- 2.	ROLLBACK 資料回滾(倒回)
+-- 	可對交易異動中的資料在資料未提交commit前，進行rollback取消這次交易所有的資料異動指令
+
+COMMIT;
+
+ROLLBACK;
 
