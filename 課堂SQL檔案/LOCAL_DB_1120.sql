@@ -246,9 +246,100 @@ FROM (
 	FROM STORE_INFORMATION
 ) S WHERE S.ROW_NUMBER_SALES <= 5;
 
+-- Aggregate Functions with OVER Clause (聚合函數)
+SELECT STORE_ID, STORE_NAME, SALES, GEOGRAPHY_ID,
+    -- 依「區域劃分」取營業額"最小值"
+    MIN(SALES) OVER (PARTITION BY GEOGRAPHY_ID) MIN_SALES,
+    -- 依「區域劃分」取營業額"最大值"
+    MAX(SALES) OVER (PARTITION BY GEOGRAPHY_ID) MAX_SALES,
+    -- 依「區域劃分」取商店"數量"
+    COUNT(STORE_ID) OVER (PARTITION BY GEOGRAPHY_ID) COUNT_STORE_ID,
+    -- 依「區域劃分」取營業額"總和"
+    SUM(SALES) OVER (PARTITION BY GEOGRAPHY_ID) SUM_SALES,
+    -- 依「區域劃分」取營業額"平均"
+    AVG(SALES) OVER (PARTITION BY GEOGRAPHY_ID) AVG_SALES
+FROM STORE_INFORMATION
+ORDER BY GEOGRAPHY_ID, SALES;
+
+-- Analytic Functions with OVER Clause (分析函數)
+SELECT STORE_ID, STORE_NAME,
+    ROW_NUMBER( ) OVER (ORDER BY SALES) ROWNO_STORE,
+    SALES,
+    -- 依「營業額」排序取"上一個"營業額
+    LAG(SALES) OVER (ORDER BY SALES) PREV_SALES,
+    -- 依「營業額」排序取"下一個"營業額
+    LEAD(SALES) OVER (ORDER BY SALES) NEXT_SALES
+FROM STORE_INFORMATION
+ORDER BY SALES;
 
 
 
+-- Oracle 轉換函數：
+-- 1.TO_CHAR(d , format)：日期轉字串
+SELECT TO_CHAR(sysdate,'YYYY-mm-DD HH24:MI:SS'),
+  -- 2.TO_DATE(string ,format)：字串轉日期
+  TO_DATE('2018-05-15 12:30:23','YYYY-mm-DD HH24:MI:SS'),
+  -- 3.TO_TIMESTAMP(string,  [format])：字串轉日期
+  TO_TIMESTAMP( '2011-12-23 12:30:23.999', 'YYYY-MM-DD HH24:MI:SS.FF3'),
+  -- 4.TO_NUMBER(STRING)：字串轉數字
+  TO_NUMBER('3') + TO_NUMBER('2')
+FROM DUAL;
+
+
+-- MySQL轉換函數：
+-- 1.DATE_FORMAT(date,format):日期轉字串
+SELECT DATE_FORMAT(SYSDATE(), '%Y-%m-%d %T'),
+-- 2.STR_TO_DATE(str,format):字串轉日期
+STR_TO_DATE('2021-08-15 00:00:00', "%Y-%m-%d %T"),
+DATE_ADD(STR_TO_DATE('2021-08-15 00:00:00', "%Y-%m-%d %T"), INTERVAL 5 DAY);
+
+SELECT CONVERT(150, CHAR);
+SELECT CONVERT('150', UNSIGNED INTEGER);
+
+
+-- MS SQL
+-- 1.日期轉字串
+SELECT convert(varchar, getdate(), 100) 'mon dd yyyy hh:mmAM (or PM)';
+SELECT convert(varchar, getdate(), 101) 'mm/dd/yyyy';
+SELECT convert(varchar, getdate(), 102) 'yyyy.mm.dd';
+SELECT convert(varchar, getdate(), 103) 'dd/mm/yyyy';
+SELECT convert(varchar, getdate(), 104) 'dd.mm.yyyy';
+SELECT convert(varchar, getdate(), 105) 'dd-mm-yyyy';
+SELECT convert(varchar, getdate(), 106) 'dd mon yyyy';
+SELECT convert(varchar, getdate(), 107) 'mon dd, yyyy';
+SELECT convert(varchar, getdate(), 108) 'hh:mm:ss';
+SELECT convert(varchar, getdate(), 109) 'mon dd yyyy hh:mm:ss:mmmAM (or PM)';
+SELECT convert(varchar, getdate(), 110) 'mm-dd-yyyy';
+SELECT convert(varchar, getdate(), 111) 'yyyy/mm/dd';
+SELECT convert(varchar, getdate(), 112) 'yyyymmdd';
+SELECT convert(varchar, getdate(), 113) 'dd mon yyyy hh:mm:ss:mmm';
+SELECT convert(varchar, getdate(), 114) 'hh:mm:ss:mmm(24h)';
+SELECT convert(varchar, getdate(), 120) 'yyyy-mm-dd hh:mm:ss(24h)';
+SELECT convert(varchar, getdate(), 121) 'yyyy-mm-dd hh:mm:ss.mmm';
+SELECT convert(varchar, getdate(), 126) 'yyyy-mm-ddThh:mm:ss.mmm';
+
+-- 2.字串轉日期
+SELECT convert(datetime, '2021-08-16 21:52:22', 120)　'yyyy-mm-dd hh:mm:ss(24h)';
+
+
+
+
+-- MySQL
+SELECT SYSDATE(), YEAR(SYSDATE()), MONTH(SYSDATE()), DAY(SYSDATE()),
+HOUR(SYSDATE()), MINUTE(SYSDATE()), SECOND(SYSDATE());
+
+
+-- MS SQL
+SELECT GETDATE(), YEAR(GETDATE()), MONTH(GETDATE()), DAY(GETDATE());
+
+SELECT GETDATE() 'Today',
+DATEPART(year,GETDATE()) 'Year Part',
+DATEPART(month,GETDATE()) 'Month Part',
+DATEPART(day,GETDATE()) 'Day Part',
+DATEPART(hour,GETDATE()) 'Hour Part',
+DATEPART(minute,GETDATE()) 'Minute Part',
+DATEPART(second,GETDATE()) 'Second Part',
+DATEPART(millisecond,GETDATE()) 'MilliSecond Part';
 
 
 
