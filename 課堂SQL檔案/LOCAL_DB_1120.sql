@@ -58,7 +58,7 @@ MINUS
 SELECT GEOGRAPHY_ID FROM STORE_INFORMATION;
 -- 查詢結果:3
 
--- MySQL沒有支援INTERSECT(替代方案)
+-- MySQL沒有支援 MINUS(替代方案)
 -- https://www.yiibai.com/mysql/minus.html
 -- LEFT JOIN + table2.id IS NULL = MINUS
 -- LEFT JOIN - INNER JOIN = MINUS
