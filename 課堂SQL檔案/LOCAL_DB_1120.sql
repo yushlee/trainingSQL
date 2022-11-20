@@ -83,3 +83,17 @@ WHERE GEOGRAPHY_ID IN (
 	SELECT GEOGRAPHY_ID FROM geography WHERE REGION_NAME = 'West'
 );
 
+
+-- 內部查詢本身與外部查詢沒有關係。這一類的子查詢稱為『簡單子查詢』 (Simple Subquery)
+-- 部查詢是要利用到外部查詢提到的表格中的欄位，那這個字查詢就被稱為『相關子查詢』(Correlated Subquery)
+-- 外查詢
+SELECT SUM(SALES) FROM STORE_INFORMATION S 
+WHERE GEOGRAPHY_ID IN (
+	-- 內查詢
+	SELECT GEOGRAPHY_ID FROM GEOGRAPHY G
+    WHERE G.GEOGRAPHY_ID = S.GEOGRAPHY_ID
+);
+
+
+
+
