@@ -1,0 +1,24 @@
+-- Ctrl + /
+
+-- SQL UNION ALL 聯集(包含重覆值)
+-- SQL INTERSECT 交集
+-- SQL MINUS 排除(不包含重覆值) 
+-- SQL SubQuery 子查詢
+-- SQL EXISTS 存在式關聯查詢
+-- SQL CASE WHEN 條件查詢
+
+
+-- SQL UNION 聯集(不包含重覆值)
+-- 1.各查詢之間所查詢的欄位"個數"必須一致!
+-- 2.各查詢之間所查詢的欄位"型別"必須一致!
+-- 1,2,3,null
+SELECT GEOGRAPHY_ID FROM STORE_INFORMATION
+UNION
+-- 1,2,3
+SELECT GEOGRAPHY_ID  FROM GEOGRAPHY;
+
+-- MySQL無此限制
+SELECT GEOGRAPHY_ID FROM STORE_INFORMATION
+UNION
+-- 1,2,3
+SELECT REGION_NAME FROM GEOGRAPHY;
