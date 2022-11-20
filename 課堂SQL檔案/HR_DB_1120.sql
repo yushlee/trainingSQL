@@ -1,0 +1,17 @@
+-- HR DB 資料查詢
+-- 查詢每個部門高於平均部門薪資的員工
+-- (結果依部門平均薪資降冪排序)
+
+SELECT * 
+FROM EMPLOYEES
+ORDER BY DEPARTMENT_ID, SALARY;
+
+-- 1.同部門與同部門薪資比較
+-- 2.查詢高於部門平均薪資
+WITH AVG_DEP AS (
+	SELECT DEPARTMENT_ID, FLOOR(AVG(SALARY)) "DEP_AVG_SALARY"
+    FROM EMPLOYEES
+    GROUP BY DEPARTMENT_ID
+)
+SELECT * FROM AVG_DEP;
+
