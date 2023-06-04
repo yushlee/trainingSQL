@@ -92,14 +92,27 @@ ON G.GEOGRAPHY_ID = S.GEOGRAPHY_ID;
 */
 
 /*
-SQL 練習題(三)
+SQL 練習題(3-1)
 查詢各區域的營業額總計
 資料結果依營業額總計由大到小排序
 (不論該區域底下是否有所屬商店)
 */
-SELECT G.*, S.* 
+-- MySQL:IFNULL
+-- Oracle:NVL
+-- MS SQL:ISNULL
+SELECT G.REGION_NAME, IFNULL(SUM(S.SALES), 0) AS "SUM_SALES"
 FROM GEOGRAPHY G LEFT JOIN STORE_INFORMATION S
-ON G.GEOGRAPHY_ID = S.GEOGRAPHY_ID;
+ON G.GEOGRAPHY_ID = S.GEOGRAPHY_ID
+GROUP BY G.REGION_NAME
+ORDER BY SUM_SALES DESC;
+
+/*
+SQL 練習題(3-1)
+查詢各區域的商店個數
+資料結果依區域的商店個數由大至小排序
+(依據商店名稱,不包含重覆的商店)
+(不論該區域底下是否有所屬商店)
+*/
 
 
 
