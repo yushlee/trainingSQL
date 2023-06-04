@@ -141,5 +141,24 @@ WHERE G.GEOGRAPHY_ID IS NULL
 OR S.GEOGRAPHY_ID IS NULL;
 */
 
+-- MS SQL、MySQL
+-- 由不同欄位獲得的資料串連在一起
+SELECT CONCAT(STORE_ID, '-', STORE_NAME, '-', SALES)  FROM STORE_INFORMATION;
 
+-- Oracle的CONCAT()只允許兩個參數；換言之，一次只能將兩個字串串連起來。不過，在Oracle中，我們可以用'||'來一次串連多個字串。
+/*
+SELECT CONCAT(STORE_ID, STORE_NAME) FROM STORE_INFORMATION;
+SELECT STORE_ID || '-' || STORE_NAME || '-' || SALES  FROM STORE_INFORMATION;
+*/
+
+/*
+substring(子字串) 函數是用來抓出一個欄位資料中的其中一部分
+1.SUBSTR(str,pos): 由<str>中，選出所有從第<pos>位置
+  開始的字元。請注意，這個語法不適用於SQL Server上。
+2.SUBSTR(str,pos,len): 由<str>中的第<pos>位置開始，選出
+  接下去的<len>個字元。
+*/
+SELECT STORE_NAME, SUBSTRING(STORE_NAME, 3), 
+	SUBSTRING(STORE_NAME, 3, 2), SUBSTRING(STORE_NAME, 1, 3)
+FROM STORE_INFORMATION;
 
