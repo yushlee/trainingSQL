@@ -23,3 +23,23 @@ SELECT STORE_NAME,
 FROM STORE_INFORMATION
 GROUP BY STORE_NAME
 ORDER BY SUM_SALES;
+
+
+-- 表格別名
+-- 不須雙引號
+-- 表格別名.欄位名稱
+SELECT S.STORE_ID, S.STORE_NAME, S.STORE_DATE
+FROM STORE_INFORMATION S;
+
+/*
+計算和統計「個別商店」的以下三項資料：
+「總合營業額」、「商店資料個數」、「平均營業額」
+搜尋或排除條件如下：
+排除「平均營業額」1000(含)以下的商店資料
+排除「商店資料個數」1(含)個以下的商店資料
+依照「平均營業額」由大至小排序
+PS:使用別名語法簡化「表格名稱」及查詢結果「欄位名稱」
+*/
+
+
+
