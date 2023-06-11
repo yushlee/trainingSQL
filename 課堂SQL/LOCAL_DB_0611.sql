@@ -171,6 +171,105 @@ FROM Vendor V JOIN Inventory I
 ON V.VENDORNUMERIC = I.VENDORNUMERIC;
 
 
+-- 多對多關係(Many to Many)(雙向一對多)
+-- A資料表中的多筆資料記錄同時可以對應到B資料表的多筆記錄
+-- 例如一位學生可以選擇多門課，一門課也可以同時被多位學生選擇
+
+-- 課程科目
+CREATE TABLE Class(
+    ClassID VARCHAR(20) PRIMARY KEY,
+    ClassName VARCHAR(300),
+    Instructor VARCHAR(100)
+);
+
+-- 學生
+CREATE TABLE Student(
+    StudentID VARCHAR(20) PRIMARY KEY,
+    Name VARCHAR(100),
+    Major VARCHAR(100),
+    ClassYear VARCHAR(50)
+);
+
+--
+-- UNIQUE (StudentID, ClassID)
+-- 表示一位學生只能選擇同樣的課程一次不得重覆
+CREATE TABLE ClassStudent_Relation(
+    StudentID VARCHAR(20) NOT NULL,
+    ClassID VARCHAR(20) NOT NULL,
+    FOREIGN KEY (StudentID) REFERENCES Student(StudentID),
+    FOREIGN KEY (ClassID) REFERENCES Class(ClassID),
+    UNIQUE (StudentID, ClassID)
+);
+
+INSERT INTO Class (ClassID, ClassNAME, INSTRUCTOR) VALUES ('1', '國文', '朱媽');
+INSERT INTO Class (ClassID, ClassNAME, INSTRUCTOR) VALUES ('2', '數學', '凡清');
+INSERT INTO Class (ClassID, ClassNAME, INSTRUCTOR) VALUES ('3', '英文', '高國華');
+INSERT INTO Class (ClassID, ClassNAME, INSTRUCTOR) VALUES ('4', '理化', '阿飛');
+INSERT INTO Class (ClassID, ClassNAME, INSTRUCTOR) VALUES ('5', '物理', '簡杰');
+INSERT INTO Class (ClassID, ClassNAME, INSTRUCTOR) VALUES ('6', '歷史', '呂杰');
+INSERT INTO Class (ClassID, ClassNAME, INSTRUCTOR) VALUES ('7', '地理', '王剛');
+
+INSERT INTO Student (StudentID, NAME, MAJOR, ClassYEAR) VALUES ('1', '馬小九', '資訊管理', '大二');
+INSERT INTO Student (StudentID, NAME, MAJOR, ClassYEAR) VALUES ('2', '輸真慘', '資訊工程', '大一');
+INSERT INTO Student (StudentID, NAME, MAJOR, ClassYEAR) VALUES ('3', '菜英蚊', '企業管理', '大三');
+INSERT INTO Student (StudentID, NAME, MAJOR, ClassYEAR) VALUES ('4', '豬利輪', '財務金融', '大二');
+INSERT INTO Student (StudentID, NAME, MAJOR, ClassYEAR) VALUES ('5', '韓國魚', '應用外語', '碩二');
+INSERT INTO Student (StudentID, NAME, MAJOR, ClassYEAR) VALUES ('6', '賣臺銘', '國際貿易', '大一');
+
+INSERT INTO ClassStudent_Relation (StudentID, ClassID) VALUES ('1', '1');
+INSERT INTO ClassStudent_Relation (StudentID, ClassID) VALUES ('1', '3');
+INSERT INTO ClassStudent_Relation (StudentID, ClassID) VALUES ('2', '1');
+INSERT INTO ClassStudent_Relation (StudentID, ClassID) VALUES ('3', '1');
+INSERT INTO ClassStudent_Relation (StudentID, ClassID) VALUES ('3', '2');
+INSERT INTO ClassStudent_Relation (StudentID, ClassID) VALUES ('3', '5');
+INSERT INTO ClassStudent_Relation (StudentID, ClassID) VALUES ('5', '6');
+INSERT INTO ClassStudent_Relation (StudentID, ClassID) VALUES ('6', '6');
+
+SELECT * FROM Class;
+SELECT * FROM Student;
+SELECT * FROM ClassStudent_Relation;
+
+SELECT C.*, CS.*, S.*
+FROM Class C 
+JOIN ClassStudent_Relation CS ON C.ClassID = CS.ClassID
+JOIN Student S ON S.StudentID = CS.StudentID
+ORDER BY C.ClassID, S.StudentID;
+
+-- 視觀表 (Views) 可以被當作是虛擬表格。它跟表格的不同是，表格中有實際儲存資料
+-- 而視觀表是建立在表格之上的一個架構，它本身並不實際儲存資料
+-- 建立一個視觀表的語法如下：
+-- CREATE VIEW "VIEW_NAME" AS
+
+CREATE VIEW V_REGION_SUM_SALES AS (
+	SELECT G.REGION_NAME, IFNULL(SUM(S.SALES), 0) AS "SUM_SALES"
+	FROM GEOGRAPHY G LEFT JOIN STORE_INFORMATION S
+	ON G.GEOGRAPHY_ID = S.GEOGRAPHY_ID
+	GROUP BY G.REGION_NAME
+	ORDER BY SUM_SALES DESC
+);
+
+SELECT * FROM v_region_sum_sales;
+
+-- 加一個欄位
+ALTER TABLE STORE_INFORMATION ADD NUM_CUSTOMER NUMERIC;
+
+-- 改變欄位名稱
+ALTER TABLE STORE_INFORMATION RENAME COLUMN NUM_CUSTOMER TO NUM_OF_CUSTOMER;
+
+-- 改變欄位的資料種類
+ALTER TABLE STORE_INFORMATION MODIFY NUM_OF_CUSTOMER VARCHAR(20);
+
+-- 刪去一個欄位
+ALTER TABLE STORE_INFORMATION DROP COLUMN NUM_OF_CUSTOMER;
+
+-- DROP會將資料表刪除
+DROP TABLE table1;
+
+-- TRUNCATE會將資料表的資料清空(資料庫不會消失)
+TRUNCATE TABLE store_information;
+
+
+
 
 
 
