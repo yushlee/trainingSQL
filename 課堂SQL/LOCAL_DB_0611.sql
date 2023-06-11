@@ -250,7 +250,7 @@ CREATE VIEW V_REGION_SUM_SALES AS (
 
 SELECT * FROM v_region_sum_sales;
 
--- 加一個欄位
+-- ☆加一個欄位
 ALTER TABLE STORE_INFORMATION ADD NUM_CUSTOMER NUMERIC;
 
 -- 改變欄位名稱
@@ -265,7 +265,7 @@ ALTER TABLE STORE_INFORMATION DROP COLUMN NUM_OF_CUSTOMER;
 -- DROP會將資料表刪除
 DROP TABLE table1;
 
--- TRUNCATE會將資料表的資料清空(資料庫不會消失)
+-- TRUNCATE會將資料表的資料清空(資料表不會消失)
 TRUNCATE TABLE store_information;
 
 
