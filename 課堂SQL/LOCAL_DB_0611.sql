@@ -100,4 +100,80 @@ CREATE TABLE STORE_INFORMATION(
  	CONSTRAINT CONSTRAINT_GEOGRAPHY_ID FOREIGN KEY (GEOGRAPHY_ID) REFERENCES GEOGRAPHY (GEOGRAPHY_ID)
 );
 
+-- 一對一關係(One to One)
+-- A資料表中的單筆資料記錄同時只能對應到B資料表的一筆記錄
+-- 例如一個洲只能有一位洲長
+
+-- 政府官員州長
+CREATE TABLE Gov(
+    GID NUMERIC(3) PRIMARY KEY,
+    Name VARCHAR(25),
+    Address VARCHAR(30),
+    TermBegin date,
+    TermEnd date
+);
+
+-- 州
+-- REFERENCES(參照)、CONSTRAINT(限制)、UNIQUE(唯一)
+CREATE TABLE State(
+    SID NUMERIC(3) PRIMARY KEY,
+    StateName VARCHAR(15),
+    Population NUMERIC(10),
+    SGID NUMERIC(4),
+    -- UNIQUE + Foreign Key = UF
+    CONSTRAINT CONSTRAINT_SGID_UNIQUE UNIQUE (SGID),
+	CONSTRAINT CONSTRAINT_FK_GOV_GID FOREIGN KEY (SGID) REFERENCES Gov(GID)
+);
+
+INSERT INTO Gov (GID, Name, Address, TermBegin, TERMEND) VALUES (110, 'Bob', '123 Any St', '2009-01-01', '2011-12-31');
+
+INSERT INTO State (SID, StateName, Population, SGID) VALUES (111, 'Virginia', 2000000, 110);
+-- INSERT INTO State (SID, StateName, Population, SGID) VALUES (112, 'Boston', 3000000, 110);
+
+SELECT * FROM GOV;
+SELECT * FROM State;
+
+
+-- One to Many 一對多關係(單向一對多)
+-- A資料表中的單筆資料記錄同時可以對應到B資料表的多筆記錄
+-- 例如一間供用商可同時有多個商品，但一個商品只能屬於一間供應商
+
+-- 供應商(父項資料表)
+CREATE TABLE Vendor(
+    VendorNUMERIC NUMERIC(4) PRIMARY KEY,
+    Name VARCHAR(20),
+    Address VARCHAR(200),
+    City VARCHAR(15),
+    Street VARCHAR(200),
+    ZipCode VARCHAR(10),
+    PhoneNUMERIC VARCHAR(12),
+    Status VARCHAR(50)
+);
+
+-- 商品清單(子項資料表)
+CREATE TABLE Inventory(
+    Item VARCHAR(50) PRIMARY KEY,
+    Description VARCHAR(300),
+    CurrentQuantity NUMERIC(4) NOT NULL,
+    VendorNUMERIC NUMERIC(4),
+	CONSTRAINT CONSTRAINT_VENDOR_FK FOREIGN KEY (VendorNUMERIC) REFERENCES Vendor(VendorNUMERIC)
+);
+
+INSERT INTO Vendor (VENDORNUMERIC, NAME, ADDRESS, CITY, STREET, ZIPCODE, PHONENUMERIC, STATUS) VALUES ('1', 'Apple Inc', '大同區承德路一段1號1樓', '台北市', '承德路', '10351', '02 7743 8068', '營運中');
+INSERT INTO Inventory (ITEM, DESCRIPTION, CURRENTQUANTITY, VENDORNUMERIC) VALUES ('iPhone 7 Plus', 'iPhone 7 Plus 5.5吋手機 32GB(原廠包裝盒+原廠配件)', '10', '1');
+INSERT INTO Inventory (ITEM, DESCRIPTION, CURRENTQUANTITY, VENDORNUMERIC) VALUES ('iPhone 12 Pro', 'iPhone 12 Pro 6.5吋手機 256GB(原廠包裝盒+原廠配件)', '20', '1');
+
+SELECT * FROM Vendor;
+SELECT * FROM Inventory;
+
+SELECT V.*, I.* 
+FROM Vendor V JOIN Inventory I
+ON V.VENDORNUMERIC = I.VENDORNUMERIC;
+
+
+
+
+
+
+
 
