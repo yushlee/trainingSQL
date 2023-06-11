@@ -286,10 +286,19 @@ SELECT * FROM STORE_INFORMATION;
 UPDATE STORE_INFORMATION SET STORE_NAME = 'HTC NEW', SALES= '7755' WHERE STORE_ID = 12;
 
 -- 3.DELETE 刪除資料表中的資料
+-- DELETE FROM "表格名"WHERE {條件} 
+DELETE FROM STORE_INFORMATION WHERE GEOGRAPHY_ID = 3;
 
+/*
+資料控制語言 DCL (Data Control Language)
+1.COMMIT 完成交易作業
+  如進行資料異動操作後最後須執行交易提交commit的動作資料方可異動成功
+  交易隔離性：資料庫交易與交易之間彼此獨立，一個交易是看不到另一個交易所異動中的資料
+2.ROLLBACK 資料回滾(倒回)
+  可對交易異動中的資料在資料未提交commit前，進行rollback取消這次交易所有的資料異動指令
+*/
+COMMIT;
 
-
-
-
+ROLLBACK;
 
 
