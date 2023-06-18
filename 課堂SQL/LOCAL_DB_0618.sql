@@ -232,3 +232,6 @@ FROM STORE_INFORMATION;
 SELECT CEIL(123.1), FLOOR(123.9),
 	ROUND(123.4), ROUND(123.5), ROUND(123.15, 1), ROUND(123456, -2);
 
+-- TRUNC(x ,[y])：返回截尾到Y位小數的X值，不做捨入處理,Y預設值為0,將X截尾為一個整數值,如果Y是負數則結尾到小數點左邊相應的位上
+-- ORACLE
+-- SELECT TRUNC(123.129, 2) FROM DUAL;
