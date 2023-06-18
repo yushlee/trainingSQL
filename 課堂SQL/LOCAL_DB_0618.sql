@@ -224,4 +224,11 @@ SELECT STORE_ID, STORE_NAME, SALES,
     ROW_NUMBER() OVER (ORDER BY SALES DESC) "STORE_ROW_NUMBER"
 FROM STORE_INFORMATION;
 
+-- CEIL(x)：返回大於或等於x的最大整數值(無條件進位)
+-- FLOOR( x)：返回小於或等於x的最小整數值(無條件捨去)
+-- ROUND(x ,[y])：
+-- 返回(四捨五入)到小數點右邊y位的x值,y預設值為0
+-- 如果y是負數，則捨入到小數點左邊相應的整數位上
+SELECT CEIL(123.1), FLOOR(123.9),
+	ROUND(123.4), ROUND(123.5), ROUND(123.15, 1), ROUND(123456, -2);
 
