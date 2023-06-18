@@ -133,6 +133,39 @@ FROM G
 JOIN S  ON G.GEOGRAPHY_ID = S.GEOGRAPHY_ID;
 
 
---   SQL EXISTS 存在式關聯查詢
+-- SQL EXISTS 存在式關聯查詢
+-- EXISTS 是用來"測試"「內查詢」有沒有產生任何結果。
+-- 如果有的話，系統就會執行「外查詢」中的 SQL。
+-- 若是沒有的話，那整個 SQL 語句就不會產生任何結果。
+
+-- 外查詢(商店)
+SELECT S.* 
+FROM STORE_INFORMATION S
+WHERE EXISTS (
+	-- 內查詢(區域)
+    SELECT G.* FROM GEOGRAPHY G
+);
+
+-- EXISTS 存在式關聯式子查詢
+-- 外查詢(商店)
+SELECT S.* 
+FROM STORE_INFORMATION S
+WHERE EXISTS (
+	-- 內查詢(區域)
+    SELECT G.* FROM GEOGRAPHY G 
+    WHERE G.GEOGRAPHY_ID = S.GEOGRAPHY_ID
+    AND G.GEOGRAPHY_ID = 1
+);
+
 --   SQL CASE WHEN 條件查詢
+-- CASE後面「接欄位」
+SELECT STORE_ID, STORE_NAME, SALES,
+	CASE STORE_NAME
+		WHEN 'Los Angeles' THEN SALES * 2
+        WHEN 'San Diego' THEN  SALES * 1.5
+        ELSE SALES
+	END "NEW_SALES"
+FROM STORE_INFORMATION;
+
+
 
